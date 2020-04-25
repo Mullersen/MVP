@@ -4,15 +4,21 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-
 window.Vue = require('vue');
 
 import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const appStore = new Vuex.Store({
-    //
+    state: {
+        transportation: "",
+    },
+    mutations: {
+        updateQuote: function(state, data) {
+            state.transportation = data;
+            console.log(data);
+        }
+    }
 });
 /**
  * The following block of code may be used to automatically register your
@@ -35,4 +41,5 @@ Vue.component('Root', require('./components/Root.vue').default);
 
 const app = new Vue({
     el: '#app',
+    store: appStore
 });

@@ -1,8 +1,15 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
+// Bulma
+@import '~bulma/bulma.sass';
+$primary: #111A2E;
+$light: #91E0E0;
+.primary {
+    color: $primary;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+.light {
+    color: $light;
+}
