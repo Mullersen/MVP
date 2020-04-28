@@ -1,15 +1,18 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
-@import 'variables';
-// Bulma
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Yanone+Kaffeesatz:600&display=swap');
+//import initial Bulma variables
+@import "~bulma/sass/utilities/initial-variables.sass";
+@import "~bulma/sass/utilities/functions.sass";
+$darkBlue: #111A2E;
+$darkBlue-invert: #fff;
+$lightBlue: #91E0E0;
+$title-color: $darkBlue-invert;
+$family-sans-serif: 'Open Sans',
+sans-serif;
+$family-header: 'Yanone Kaffeesatz',
+sans-serif;
+$family-primary: $family-sans-serif;
+$family-secondary: $family-header;
+$primary: $darkBlue;
+$light: $lightBlue;
+// import the rest of Bulma
 @import '~bulma/bulma.sass';
-$primary: #111A2E;
-$light: #91E0E0;
-.primary {
-    color: $primary;
-}
-
-.light {
-    color: $light;
-}
