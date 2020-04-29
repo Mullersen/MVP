@@ -245,6 +245,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -313,7 +347,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#welcomeHero{\n    display:none;\n}\n#canadaTitle{\n    font-size:8rem;\n}\n.carouselImg{\n    height:auto;\n    width:auto;\n    overflow:hidden;\n}\n#virtualTrip{\n    border-bottom: 3px solid #111A2E;\n    padding: 3rem 0 1rem 0;\n    margin-bottom: 2rem;\n}\n@media (max-width: 500px){\n#heroWrapper{\n        height:50vh !important;\n        background-image: url('/images/Norquay-lookout.JPG');\n        background-repeat: no-repeat;\n        background-size: cover;\n}\n#canadaTitle{\n        font-size:3rem;\n}\n#welcomeCarousel{\n        display:none;\n}\n#welcomeHero{\n        display:inline;\n}\n#heroImg{\n        opacity: 0.3;\n}\n}\n", ""]);
+exports.push([module.i, "\n#welcomeHero{\n    display:none;\n}\n#canadaTitle{\n    font-size:8rem;\n}\n.carouselImg{\n    height:auto;\n    width:auto;\n    overflow:hidden;\n}\n#virtualTrip{\n    border-bottom: 3px solid #111A2E;\n    padding: 3rem 0 1rem 0;\n    margin-bottom: 2rem;\n}\n.navbar-background{\n    background-color: #111A2E !important;\n}\n@media (max-width: 500px){\n#heroWrapper{\n        height:50vh !important;\n        background-image: url('/images/Norquay-lookout.JPG');\n        background-repeat: no-repeat;\n        background-size: cover;\n}\n#canadaTitle{\n        font-size:3rem;\n}\n#welcomeCarousel{\n        display:none;\n}\n#welcomeHero{\n        display:inline;\n}\n#heroImg{\n        opacity: 0.3;\n}\n}\n", ""]);
 
 // exports
 
@@ -1496,6 +1530,8 @@ var render = function() {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
     _c("section", { staticClass: "section is-medium has-background-primary" }, [
       _c("div", { staticClass: "container" }, [
         _c("h1", { staticClass: "title is-2" }, [_vm._v("The route")]),
@@ -1556,8 +1592,12 @@ var staticRenderFns = [
           _c(
             "nav",
             {
-              staticClass: "navbar is-transparent is-fixed-top",
-              attrs: { role: "navigation", "aria-label": "main navigation" }
+              staticClass: "navbar is-fixed-top",
+              attrs: {
+                id: "myNavbar",
+                role: "navigation",
+                "aria-label": "main navigation"
+              }
             },
             [
               _c("div", { staticClass: "container" }, [
@@ -1579,7 +1619,7 @@ var staticRenderFns = [
                   _c(
                     "a",
                     {
-                      staticClass: "navbar-burger is-active",
+                      staticClass: "navbar-burger has-text-white",
                       attrs: {
                         role: "button",
                         "aria-label": "menu",
@@ -1644,14 +1684,113 @@ var staticRenderFns = [
             _c(
               "h1",
               {
-                staticClass: "title has-text-white",
+                staticClass: "title has-text-white is-family-secondary ",
                 attrs: { id: "canadaTitle" }
               },
               [_vm._v("Canada")]
             ),
             _vm._v(" "),
-            _c("button", { staticClass: "button is-radiusless is-dark" }, [
-              _vm._v("Let's take you on a trip!")
+            _c(
+              "button",
+              {
+                staticClass: "button is-radiusless is-dark is-family-secondary "
+              },
+              [_vm._v("Let's take you on a trip!")]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "section",
+      { staticClass: "section is-medium has-background-primary" },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "columns" }, [
+            _c("div", { staticClass: "column is-one-third" }, [
+              _c("figure", { staticClass: "image is-3by4" }, [
+                _c("img", {
+                  attrs: {
+                    src: "images/DSC00170.JPG",
+                    alt: "The route through the canadian rockies"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-two-thirds" }, [
+              _c("h1", { staticClass: "title is-2" }, [
+                _vm._v("Feel the beauty of Canada")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "content" }, [
+                _vm._v(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ILorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem I"
+                )
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "button is-radiusless" }, [
+                _vm._v("Let's take you here")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "title is-2 has-text-centered" }, [
+            _vm._v("The process")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "columns" }, [
+            _c("div", { staticClass: "column" }, [
+              _c("h2", { staticClass: "title is-2 has-text-grey" }, [
+                _vm._v("01")
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "subtitle is-2" }, [
+                _vm._v("Get Inspiration")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "content" }, [
+                _vm._v(
+                  "Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below."
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column" }, [
+              _c("h2", { staticClass: "title is-2 has-text-grey" }, [
+                _vm._v("01")
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "subtitle is-2" }, [
+                _vm._v("Get Inspiration")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "content" }, [
+                _vm._v(
+                  "Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below."
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column" }, [
+              _c("h2", { staticClass: "title is-2 has-text-grey" }, [
+                _vm._v("01")
+              ]),
+              _vm._v(" "),
+              _c("h3", { staticClass: "subtitle is-2" }, [
+                _vm._v("Get Inspiration")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "content" }, [
+                _vm._v(
+                  "Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below."
+                )
+              ])
             ])
           ])
         ])
@@ -1692,7 +1831,7 @@ var staticRenderFns = [
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "column" }, [
-                  _c("p", [
+                  _c("p", { staticClass: "content" }, [
                     _vm._v(
                       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently w"
                     )

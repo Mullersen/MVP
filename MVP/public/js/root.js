@@ -111,6 +111,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+var navBar = document.getElementById('myNavbar');
+window.addEventListener('scroll', function (event) {
+  event.preventDefault();
+
+  if (window.scrollY >= 150) {
+    navBar.classList.add("navbar-background");
+    navBar.classList.remove("is-transparent");
+  } else {
+    navBar.classList.add("is-transparent");
+    navBar.classList.remove("navbar-background");
+  }
+});
 
 /***/ }),
 
