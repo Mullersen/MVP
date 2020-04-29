@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transportation extends Model
 {
-    protected $table = 'transportation';
+    protected $table = 'transportations';
 
     public function Route(){
         return $this->belongsTo('App\Route');
