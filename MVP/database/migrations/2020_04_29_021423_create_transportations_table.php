@@ -15,7 +15,7 @@ class CreateTransportationsTable extends Migration
     {
         Schema::create('transportations', function (Blueprint $table) {
             $table->id();
-            $table->boolean('transport_method');
+            $table->string('transport_method');
             $table->mediumInteger('price');
             $table->timestamps();
         });

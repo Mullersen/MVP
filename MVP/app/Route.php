@@ -14,5 +14,4 @@ class Route extends Model
     public function transportation(){
         return $this->hasOne('App\Transportation');
     }
-
 }

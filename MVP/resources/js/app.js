@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+const axios = require('axios');
 
 window.Vue = require('vue');
 
@@ -11,33 +12,32 @@ Vue.use(Vuex);
 
 const appStore = new Vuex.Store({
     state: {
-        transportation: "",
+        transportationArray: [],
+        transportation:"",
     },
     mutations: {
         updateQuote: function(state, data) {
             state.transportation = data;
-            console.log(data);
+        }
+    },
+    actions: {
+        //find the methods of transportations stored in the database
+        requestTransportation: function(context){
+            axios.get('/getTransportation')
+            .then(response => {
+                console.log(response.data.transportation);
+                context.state.transportationArray = response.data.transportation;
+            })
+            .catch(error => {
+                console.log(error.message); // change to error message on screen
+            });
         }
     }
 });
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('Root', require('./components/Root.vue').default);
+Vue.component('Cart', require('./components/Cart.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
 const app = new Vue({
     el: '#app',

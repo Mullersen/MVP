@@ -1,36 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+@extends('layout.app')
 
-    <title>Inside Canada</title>
-</head>
-<body>
+@section('content')
+    <div>
+        <section id="heroWrapper" class="hero is-primary is-fullheight has-carousel">
+            <div id="welcomeCarousel" class="hero-carousel">
+                <div class="carousel has-background">
+                    <img class="carouselImg" src="images/Norquay-lookout.JPG" alt="">
+                </div>
+                <div class="carousel has-background">
+                    <img class="carouselImg" src="images/DSC00170.JPG" alt="">
+                </div>
+                <div class="carousel has-background">
+                    <img class="carouselImg" src="images/DSC00046.JPG" alt="">
+                </div>
+            </div>
+            <div class="hero-head">
+                <nav id="myNavbar" class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item" href="/">
+                                <img src="/images/logo_neg.png" alt="Inside Canada: the familiar travel agency" style="max-height:3.25rem">
+                            </a>
+                            <a role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                                <span aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <div id="navMenu" class="navbar-menu has-text-white">
+                            <div class="navbar-end">
+                                <a class="navbar-item" href="#virtualTrip">Virtual trip</a>
+                                <a class="navbar-item" href="/cart">Cart</a>
+                                <a class="navbar-item" href="#whoAreWe">Who are we</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 id="canadaTitle" class="title has-text-white is-family-secondary " >Canada</h1>
+                    <button class="button is-radiusless is-dark is-family-secondary ">Let's take you on a trip!</button>
+                </div>
+            </div>
+        </section>
+        <section class="section is-medium has-background-primary">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-one-third">
+                        <figure class="image is-3by4">
+                            <img src="images/DSC00170.JPG" alt="The route through the canadian rockies">
+                        </figure>
+                    </div>
+                    <div class="column is-two-thirds">
+                        <h1 class="title is-2">Feel the beauty of Canada</h1>
+                        <p class="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ILorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem I</p>
+                        <button class="button is-radiusless">Let's take you here</button>
+                    </div>
+                </div>
+                <h2 class="title is-2 has-text-centered">The process</h2>
+                <div class="columns">
+                    <div class="column is-half is-offset-one-quarter">
+                        <div class="column">
+                            <h2 class="title is-2 has-text-grey">01</h2>
+                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                        </div>
+                        <div class="column">
+                            <h2 class="title is-2 has-text-grey">01</h2>
+                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                        </div>
+                        <div class="column">
+                            <h2 class="title is-2 has-text-grey">01</h2>
+                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section is-medium has-background-primary">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-two-thirds">
+                        <div class="columns has-text-centered">
+                            <h1 id="virtualTrip" class="title is-2"><span class="title is-1 has-text-grey">01</span>   The Virtual Trip</h1>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <figure class="image is-square">
+                                    <img src="images/DSC00170.JPG" alt="">
+                                </figure>
+                            </div>
+                            <div class="column">
+                                <p class="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently w</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <figure class="image is-2by3">
+                            <img src="images/DSC00170.JPG" alt="The route through the canadian rockies">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="app">
+            <Root/>
+        </div>
+@endsection
 
-    <div id="app">
-        <Root/>
-    </div>
 
-</body>
-<script src="js/app.js"></script>
-<script src="js/root.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script>
- bulmaCarousel.attach('#welcomeCarousel', {
-                slidesToScroll: 1,
-                slidesToShow: 1,
-                autoplay: true,
-                autoplaySpeed: 10000,
-                loop: true,
-                duration: 600,
-                navigation: false,
-        });
-
-</script>
-</html>
