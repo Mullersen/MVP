@@ -4,7 +4,7 @@
       <h3 class="subtitle is-3">Chosen method of transportation</h3>
       <h2>{{getCookie("transport")}}</h2>
       <div v-for="transportation in this.$store.state.transportationArray" :key="transportation.id">
-          <h2 v-if="transportation.transport_method == this.transportation">{{transportation}}</h2>
+          <h2 v-if="transportation.transport_method == transportationMethod">{{transportation.price}} CAD</h2>
       </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     name:"Cart",
     data: function(){
         return{
-            transportation: ""
+            transportationMethod: ""
         }
     },
     methods:{
@@ -29,7 +29,7 @@ export default {
                 }
                 if (cookie.indexOf(transport) == 0) {
                     this.$store.dispatch('requestTransportation');
-                    this.transportation = cookie.substring(transport.length+1, cookie.length);
+                    this.transportationMethod = cookie.substring(transport.length+1, cookie.length);
                     return cookie.substring(transport.length+1, cookie.length);
                 }
             }

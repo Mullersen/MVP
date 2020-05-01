@@ -1944,7 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "Cart",
   data: function data() {
     return {
-      transportation: ""
+      transportationMethod: ""
     };
   },
   methods: {
@@ -1962,7 +1962,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (cookie.indexOf(transport) == 0) {
           this.$store.dispatch('requestTransportation');
-          this.transportation = cookie.substring(transport.length + 1, cookie.length);
+          this.transportationMethod = cookie.substring(transport.length + 1, cookie.length);
           return cookie.substring(transport.length + 1, cookie.length);
         }
       }
@@ -1984,8 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Transport_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Transport.vue */ "./resources/js/components/Transport.vue");
-/* harmony import */ var _Addon_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Addon.vue */ "./resources/js/components/Addon.vue");
-/* harmony import */ var _Cart_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Cart.vue */ "./resources/js/components/Cart.vue");
+/* harmony import */ var _Cart_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Cart.vue */ "./resources/js/components/Cart.vue");
 //
 //
 //
@@ -1997,17 +1996,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Root",
   components: {
     Transport: _Transport_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Addon: _Addon_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Cart: _Cart_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Cart: _Cart_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2028,6 +2023,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Addon_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Addon.vue */ "./resources/js/components/Addon.vue");
 //
 //
 //
@@ -2036,17 +2032,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Transport",
+  components: {
+    Addon: _Addon_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      transport: "Car"
+      transport: "Car",
+      toggleState: false
     };
   },
   methods: {
     updateTransport: function updateTransport(index) {
-      //this.$store.commit('updateQuote', this.$store.state.transportationArray[index].transport_method);
       document.cookie = "transport =" + this.$store.state.transportationArray[index].transport_method + "";
+      this.toggleState = true;
     }
   },
   mounted: function mounted() {
@@ -3184,9 +3188,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("Here is where the addons go!")])])
+  }
+]
 render._withStripped = true
 
 
@@ -3221,8 +3232,8 @@ var render = function() {
       _vm._v(" "),
       _vm._l(this.$store.state.transportationArray, function(transportation) {
         return _c("div", { key: transportation.id }, [
-          transportation.transport_method == this.transportation
-            ? _c("h2", [_vm._v(_vm._s(transportation))])
+          transportation.transport_method == _vm.transportationMethod
+            ? _c("h2", [_vm._v(_vm._s(transportation.price) + " CAD")])
             : _vm._e()
         ])
       })
@@ -3269,7 +3280,7 @@ var render = function() {
           _vm._v(" "),
           _c("Transport"),
           _vm._v(" "),
-          _c("div", [_c("Cart")], 1)
+          _c("Cart")
         ],
         1
       )
@@ -3325,7 +3336,9 @@ var render = function() {
         )
       }),
       0
-    )
+    ),
+    _vm._v(" "),
+    _vm.toggleState == true ? _c("div", [_c("Addon")], 1) : _vm._e()
   ])
 }
 var staticRenderFns = []

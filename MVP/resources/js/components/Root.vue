@@ -4,16 +4,13 @@
                 <h1 class="title is-2">The route</h1>
                 <img src="images/routeMap.JPG" alt="">
                 <Transport/>
-                <div>
-                    <Cart/>
-                </div>
+                <Cart/>
             </div>
         </section>
 </template>
 
 <script>
 import Transport from './Transport.vue';
-import Addon from './Addon.vue';
 import Cart from './Cart.vue';
 
 
@@ -21,7 +18,6 @@ import Cart from './Cart.vue';
         name: "Root",
         components: {
             Transport,
-            Addon,
             Cart,
         },
         data: function(){
