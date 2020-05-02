@@ -39,7 +39,7 @@
             </div>
             <div class="hero-body">
                 <div class="container has-text-centered">
-                    <h1 id="canadaTitle" class="title has-text-white is-family-secondary " >Canada</h1>
+                    <p id="canadaTitle" class="title has-text-white is-family-secondary " >Canada</p>
                     <button class="button is-radiusless is-dark is-family-secondary ">Let's take you on a trip!</button>
                 </div>
             </div>
@@ -62,18 +62,18 @@
                 <div class="columns">
                     <div class="column is-half is-offset-one-quarter">
                         <div class="column">
-                            <h2 class="title is-2 has-text-grey">01</h2>
-                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="title is-2 has-text-grey">01</p>
+                            <p class="subtitle is-2">Get Inspiration</p>
                             <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
                         </div>
                         <div class="column">
-                            <h2 class="title is-2 has-text-grey">01</h2>
-                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="title is-2 has-text-grey">01</p>
+                            <p class="subtitle is-2">Get Inspiration</p>
                             <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
                         </div>
                         <div class="column">
-                            <h2 class="title is-2 has-text-grey">01</h2>
-                            <h3 class="subtitle is-2">Get Inspiration</h3>
+                            <p class="title is-2 has-text-grey">01</p>
+                            <p class="subtitle is-2">Get Inspiration</p>
                             <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                 <div class="columns">
                     <div class="column is-two-thirds">
                         <div class="columns has-text-centered">
-                            <h1 id="virtualTrip" class="title is-2"><span class="title is-1 has-text-grey">01</span>   The Virtual Trip</h1>
+                            <p id="virtualTrip" class="title is-2"><span class="title is-1 has-text-grey">01</span>   The Virtual Trip</p>
                         </div>
                         <div class="columns">
                             <div class="column">

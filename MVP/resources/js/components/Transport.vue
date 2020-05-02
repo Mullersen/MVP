@@ -19,13 +19,12 @@ export default {
     },
     data: function(){
         return{
-            transport: "Car",
             toggleState: false,
         }
     },
     methods:{
         updateTransportLoadAddons: function(index){
-            document.cookie = "transport =" + this.$store.state.transportationArray[index].transport_method + "";
+            document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method + "";
             this.toggleState = true;
             this.$store.dispatch('requestAddons');
         },

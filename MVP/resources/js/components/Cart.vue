@@ -6,6 +6,8 @@
       <div v-for="transportation in this.$store.state.transportationArray" :key="transportation.id">
           <p v-if="transportation.transport_method == transportationMethod">{{transportation.price}} CAD</p>
       </div>
+      <p class="subtitle is-3">Chosen Addons</p>
+      <p>{{getCookie("addons")}}</p>
   </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
                 cookie = cookie.substring(1);
                 }
                 if (cookie.indexOf(transport) == 0) {
-                    this.transportationMethod = cookie.substring(transport.length+1, cookie.length);
+                    this.transportationMethod = cookie.substring(transport.length, cookie.length);
                     return cookie.substring(transport.length+1, cookie.length);
                 }
             }
