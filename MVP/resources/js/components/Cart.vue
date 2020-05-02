@@ -1,10 +1,10 @@
 <template>
   <div>
-      <h2 class="title is-3">Cart</h2>
-      <h3 class="subtitle is-3">Chosen method of transportation</h3>
-      <h2>{{getCookie("transport")}}</h2>
+      <p class="title is-3">Cart</p>
+      <p class="subtitle is-3">Chosen method of transportation</p>
+      <p>{{getCookie("transport")}}</p>
       <div v-for="transportation in this.$store.state.transportationArray" :key="transportation.id">
-          <h2 v-if="transportation.transport_method == transportationMethod">{{transportation.price}} CAD</h2>
+          <p v-if="transportation.transport_method == transportationMethod">{{transportation.price}} CAD</p>
       </div>
   </div>
 </template>
@@ -28,12 +28,12 @@ export default {
                 cookie = cookie.substring(1);
                 }
                 if (cookie.indexOf(transport) == 0) {
-                    this.$store.dispatch('requestTransportation');
                     this.transportationMethod = cookie.substring(transport.length+1, cookie.length);
                     return cookie.substring(transport.length+1, cookie.length);
                 }
             }
             return "";
+            this.$store.dispatch('requestTransportation');
         }
     }
 }

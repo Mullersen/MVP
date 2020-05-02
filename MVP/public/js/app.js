@@ -1914,8 +1914,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Addon"
+  name: "Addon",
+  methods: {}
 });
 
 /***/ }),
@@ -1961,13 +1982,13 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (cookie.indexOf(transport) == 0) {
-          this.$store.dispatch('requestTransportation');
           this.transportationMethod = cookie.substring(transport.length + 1, cookie.length);
           return cookie.substring(transport.length + 1, cookie.length);
         }
       }
 
       return "";
+      this.$store.dispatch('requestTransportation');
     }
   }
 });
@@ -2048,9 +2069,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateTransport: function updateTransport(index) {
+    updateTransportLoadAddons: function updateTransportLoadAddons(index) {
       document.cookie = "transport =" + this.$store.state.transportationArray[index].transport_method + "";
       this.toggleState = true;
+      this.$store.dispatch('requestAddons');
     }
   },
   mounted: function mounted() {
@@ -3188,14 +3210,48 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "has-background-secondary" },
+    _vm._l(this.$store.state.addonArray, function(addon, index) {
+      return _c("div", { key: addon.id }, [
+        _c("div", { staticClass: "columns" }, [
+          _c("div", { staticClass: "column is-one-quarter" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0, true),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-content" }, [
+                _c("p", { staticClass: "title is-4" }, [
+                  _vm._v(_vm._s(addon.activity))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "subtitle is-6" }, [
+                  _vm._v(_vm._s(addon.price))
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    }),
+    0
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("Here is where the addons go!")])])
+    return _c("div", { staticClass: "card-image" }, [
+      _c("figure", { staticClass: "image is-4by3" }, [
+        _c("img", {
+          attrs: {
+            src: "images/DSC00046.JPG",
+            alt: "activity for Inside Canada in the Rocky Mountains"
+          }
+        })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -3222,18 +3278,18 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h2", { staticClass: "title is-3" }, [_vm._v("Cart")]),
+      _c("p", { staticClass: "title is-3" }, [_vm._v("Cart")]),
       _vm._v(" "),
-      _c("h3", { staticClass: "subtitle is-3" }, [
+      _c("p", { staticClass: "subtitle is-3" }, [
         _vm._v("Chosen method of transportation")
       ]),
       _vm._v(" "),
-      _c("h2", [_vm._v(_vm._s(_vm.getCookie("transport")))]),
+      _c("p", [_vm._v(_vm._s(_vm.getCookie("transport")))]),
       _vm._v(" "),
       _vm._l(this.$store.state.transportationArray, function(transportation) {
         return _c("div", { key: transportation.id }, [
           transportation.transport_method == _vm.transportationMethod
-            ? _c("h2", [_vm._v(_vm._s(transportation.price) + " CAD")])
+            ? _c("p", [_vm._v(_vm._s(transportation.price) + " CAD")])
             : _vm._e()
         ])
       })
@@ -3324,7 +3380,7 @@ var render = function() {
             staticClass: "column is-half title",
             on: {
               click: function($event) {
-                return _vm.updateTransport(index)
+                return _vm.updateTransportLoadAddons(index)
               }
             }
           },
@@ -16588,7 +16644,8 @@ Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
     transportationArray: [],
-    transportation: ""
+    transportation: "",
+    addonArray: []
   },
   mutations: {
     updateQuote: function updateQuote(state, data) {
@@ -16601,6 +16658,14 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       axios.get('/getTransportation').then(function (response) {
         console.log(response.data.transportation);
         context.state.transportationArray = response.data.transportation;
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    },
+    requestAddons: function requestAddons(context) {
+      axios.get('/getAddons').then(function (response) {
+        console.log(response.data.addons);
+        context.state.addonArray = response.data.addons;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });

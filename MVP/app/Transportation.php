@@ -8,7 +8,7 @@ class Transportation extends Model
 {
     protected $table = 'transportations';
 
-    public function Route(){
+    public function route(){
         return $this->belongsTo('App\Route');
     }
 }

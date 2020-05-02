@@ -20,3 +20,4 @@ Route::get('/getTransportation', 'ProductController@getTransportation');
 Route::get('/cart', function(){
     return view('cart');
 });
+Route::get('/getAddons', 'ProductController@getAddons');

@@ -1,7 +1,7 @@
 <template>
   <div class="has-text-centered">
       <div class="columns">
-        <h2 class="column is-half title" @click="updateTransport(index)" v-for="(transportation, index) in this.$store.state.transportationArray" :key="transportation.id"> I want to travel by {{transportation.transport_method}}</h2>
+        <h2 class="column is-half title" @click="updateTransportLoadAddons(index)" v-for="(transportation, index) in this.$store.state.transportationArray" :key="transportation.id"> I want to travel by {{transportation.transport_method}}</h2>
       </div>
       <div v-if="toggleState == true">
             <Addon/>
@@ -24,9 +24,10 @@ export default {
         }
     },
     methods:{
-        updateTransport: function(index){
+        updateTransportLoadAddons: function(index){
             document.cookie = "transport =" + this.$store.state.transportationArray[index].transport_method + "";
             this.toggleState = true;
+            this.$store.dispatch('requestAddons');
         },
     },
     mounted(){

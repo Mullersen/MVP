@@ -13,7 +13,8 @@ Vue.use(Vuex);
 const appStore = new Vuex.Store({
     state: {
         transportationArray: [],
-        transportation:"",
+        transportation: "",
+        addonArray: [],
     },
     mutations: {
         updateQuote: function(state, data) {
@@ -22,15 +23,25 @@ const appStore = new Vuex.Store({
     },
     actions: {
         //find the methods of transportations stored in the database
-        requestTransportation: function(context){
+        requestTransportation: function(context) {
             axios.get('/getTransportation')
-            .then(response => {
-                console.log(response.data.transportation);
-                context.state.transportationArray = response.data.transportation;
-            })
-            .catch(error => {
-                console.log(error.message); // change to error message on screen
-            });
+                .then(response => {
+                    console.log(response.data.transportation);
+                    context.state.transportationArray = response.data.transportation;
+                })
+                .catch(error => {
+                    console.log(error.message); // change to error message on screen
+                });
+        },
+        requestAddons: function(context) {
+            axios.get('/getAddons')
+                .then(response => {
+                    console.log(response.data.addons);
+                    context.state.addonArray = response.data.addons;
+                })
+                .catch(error => {
+                    console.log(error.message); // change to error message on screen
+                });
         }
     }
 });
