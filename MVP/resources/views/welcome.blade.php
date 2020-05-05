@@ -54,7 +54,7 @@
                     </div>
                     <div class="column is-two-thirds">
                         <h1 class="title is-2">Feel the beauty of Canada</h1>
-                        <p class="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ILorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem I</p>
+                        <p class="content">We at Inside Canada have fallen hopelessly for the uncut nature experiences Canada can offer visitiors and local alike. We exist with the single purpose of showing you why, and because we live here we know how to guide you to the most beautiful turquiose lakes and untouched snowpeaks in the mountains. Scroll down to see why we are so passionate about our second home!</p>
                         <button class="button is-radiusless">Let's take you here</button>
                     </div>
                 </div>
@@ -64,17 +64,17 @@
                         <div class="column">
                             <p class="title is-2 has-text-grey">01</p>
                             <p class="subtitle is-2">Get Inspiration</p>
-                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences, so you are free to follow it, or do your own thing. See it below.</p>
                         </div>
                         <div class="column">
-                            <p class="title is-2 has-text-grey">01</p>
-                            <p class="subtitle is-2">Get Inspiration</p>
-                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                            <p class="title is-2 has-text-grey">02</p>
+                            <p class="subtitle is-2">Contact us</p>
+                            <p class="content">Promise we don't bite. If you have any questions, or would like to implement your own destination but don't now how, you are always free to contect us!</p>
                         </div>
                         <div class="column">
-                            <p class="title is-2 has-text-grey">01</p>
-                            <p class="subtitle is-2">Get Inspiration</p>
-                            <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences. See it below.</p>
+                            <p class="title is-2 has-text-grey">03</p>
+                            <p class="subtitle is-2">Book the trip of your dreams!</p>
+                            <p class="content">You canbook it right here on the website, or you can contact us. We promise you will not regret it!</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,8 @@
                                 </figure>
                             </div>
                             <div class="column">
-                                <p class="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently w</p>
+                                <p class="content">You probably already know a bit about the Rocky Mountains, which means that the names Lake Louise and Banff most likely ring a bell. That is also true for the thousands if tourists that visit these destinations every day in the high-season. Lucky for you, we have seen it all, and we know the unknown destinations that will take your breath away. The following virtual trip is our best guideline to the Canada trip we want you to experience. If course it is all flexible, and in reality completely up to you whether you want to follow our advice or not.
+                                </p>
                             </div>
                         </div>
                     </div>

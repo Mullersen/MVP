@@ -15,10 +15,14 @@ const appStore = new Vuex.Store({
         transportationArray: [],
         transportation: "",
         addonArray: [],
+        chosenAddons: [],
     },
     mutations: {
         updateQuote: function(state, data) {
             state.transportation = data;
+        },
+        updateAddons: function(state, data) {
+            state.chosenAddons = data;
         }
     },
     actions: {
@@ -36,7 +40,7 @@ const appStore = new Vuex.Store({
         requestAddons: function(context) {
             axios.get('/getAddons')
                 .then(response => {
-                    console.log(response.data.addons);
+                    //console.log(response.data.addons);
                     context.state.addonArray = response.data.addons;
                 })
                 .catch(error => {

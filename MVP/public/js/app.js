@@ -1937,28 +1937,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Addon",
+  data: function data() {
+    return {
+      innerHTMLArr: []
+    };
+  },
   methods: {
     updateAddons: function updateAddons(index) {
       var selectedAddon = document.getElementById("addon" + index);
 
       if (selectedAddon.classList.contains("activeAddon") == true) {
-        selectedAddon.classList.remove("activeAddon"); //delete cookie with addon in it
+        selectedAddon.classList.remove("activeAddon");
       } else {
-        selectedAddon.classList.add("activeAddon"); //add cookie with addon
+        selectedAddon.classList.add("activeAddon");
+      } //select all chosen addons and turn into cookie
+
+
+      var allCards = document.querySelectorAll(".activeAddon");
+      var allCardsArr = Array.from(allCards);
+      var newArr = allCardsArr.map(function (i) {
+        return i.innerText;
+      });
+      this.$store.commit('updateAddons', newArr);
+
+      if (newArr.length > 0) {
+        //don't stringify an empty array
+        var json_str = JSON.stringify(newArr);
+        document.cookie = "addons=" + json_str + "";
       }
-
-      var allCards = document.querySelectorAll(".activeAddon .title");
-
-      for (var i = 0; i <= allCards.length; i++) {
-        var titleData = allCards.innerHTML[i];
-      }
-
-      console.log(titleData);
-      var json_str = JSON.stringify(allCards);
-      document.cookie = "addons=" + json_str + "";
     }
   }
 });
@@ -1987,35 +1995,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cart",
   data: function data() {
     return {
-      transportationMethod: ""
+      transportationMethod: "",
+      addonArray: []
     };
   },
   methods: {
-    getCookie: function getCookie(transport) {
-      var name = transport + "=";
+    getAddons: function getAddons(param) {
+      var parsed = JSON.parse(this.getCookie("addons"));
+      this.addonArray = parsed;
+    },
+    getCookie: function getCookie(param) {
+      var name = param + "=";
       var decodedCookie = decodeURIComponent(document.cookie);
-      var ca = decodedCookie.split(';');
+      var ca = decodedCookie.split(";");
 
       for (var i = 0; i < ca.length; i++) {
         var cookie = ca[i];
 
-        while (cookie.charAt(0) == ' ') {
+        while (cookie.charAt(0) == " ") {
           cookie = cookie.substring(1);
         }
 
-        if (cookie.indexOf(transport) == 0) {
-          this.transportationMethod = cookie.substring(transport.length, cookie.length);
-          return cookie.substring(transport.length + 1, cookie.length);
+        if (cookie.indexOf(param) == 0) {
+          return cookie.substring(param.length + 1, cookie.length);
         }
       }
 
       return "";
-      this.$store.dispatch('requestTransportation');
+      this.$store.dispatch("requestTransportation");
     }
+  },
+  mounted: function mounted() {
+    this.getAddons();
   }
 });
 
@@ -2082,6 +2108,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Transport",
@@ -2095,6 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateTransportLoadAddons: function updateTransportLoadAddons(index) {
+      this.$store.commit('updateQuote', this.$store.state.transportationArray[index].transport_method);
       document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method + "";
       this.toggleState = true;
       this.$store.dispatch('requestAddons');
@@ -3294,7 +3322,6 @@ var render = function() {
           {
             key: index,
             staticClass: "column is-one-quarter",
-            class: { active: addon },
             attrs: { id: "cardContainer" }
           },
           [
@@ -3310,7 +3337,16 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0, true),
+                _c("div", { staticClass: "card-image" }, [
+                  _c("figure", { staticClass: "image is-4by3" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "images/" + addon.image,
+                        alt: "activity for Inside Canada in the Rocky Mountains"
+                      }
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [
                   _c("p", { staticClass: "title is-4 has-text-dark" }, [
@@ -3330,23 +3366,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-image" }, [
-      _c("figure", { staticClass: "image is-4by3" }, [
-        _c("img", {
-          attrs: {
-            src: "images/DSC00046.JPG",
-            alt: "activity for Inside Canada in the Rocky Mountains"
-          }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -3368,31 +3388,37 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("p", { staticClass: "title is-3" }, [_vm._v("Cart")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "subtitle is-3" }, [
-        _vm._v("Chosen method of transportation")
-      ]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.getCookie("transport")))]),
-      _vm._v(" "),
-      _vm._l(this.$store.state.transportationArray, function(transportation) {
-        return _c("div", { key: transportation.id }, [
-          transportation.transport_method == _vm.transportationMethod
-            ? _c("p", [_vm._v(_vm._s(transportation.price) + " CAD")])
-            : _vm._e()
-        ])
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "subtitle is-3" }, [_vm._v("Chosen Addons")]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.getCookie("addons")))])
-    ],
-    2
-  )
+  return _c("div", [
+    _c("p", { staticClass: "title is-3" }, [_vm._v("Cart")]),
+    _vm._v(" "),
+    _c("p", { staticClass: "subtitle is-3" }, [
+      _vm._v("Chosen method of transportation")
+    ]),
+    _vm._v(" "),
+    this.$store.state.transportation == !""
+      ? _c("p", [_vm._v(_vm._s(this.$store.state.transportation))])
+      : _c("p", [_vm._v(_vm._s(_vm.getCookie("transport")))]),
+    _vm._v(" "),
+    _c("p", { staticClass: "subtitle is-3" }, [_vm._v("Chosen Addons")]),
+    _vm._v(" "),
+    this.$store.state.chosenAddons.length > 0
+      ? _c(
+          "div",
+          { attrs: { id: "state" } },
+          _vm._l(this.$store.state.chosenAddons, function(addon) {
+            return _c("p", { key: addon }, [_vm._v(_vm._s(addon))])
+          }),
+          0
+        )
+      : _c(
+          "div",
+          { attrs: { id: "cookie" } },
+          _vm._l(this.addonArray, function(addon) {
+            return _c("p", { key: addon }, [_vm._v(_vm._s(addon))])
+          }),
+          0
+        )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -3463,6 +3489,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "has-text-centered" }, [
+    _c("p", { staticClass: "content" }, [
+      _vm._v(
+        "We have come up with what we think is a really good route for the time you are in Canada. You have a bunch of options to choose from on the route. Along the way we will bring you on a virtual trip. All pictures are clickable, and will show you what your choices will look like on your trip. "
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "columns" },
@@ -16742,11 +16774,15 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
     transportationArray: [],
     transportation: "",
-    addonArray: []
+    addonArray: [],
+    chosenAddons: []
   },
   mutations: {
     updateQuote: function updateQuote(state, data) {
       state.transportation = data;
+    },
+    updateAddons: function updateAddons(state, data) {
+      state.chosenAddons = data;
     }
   },
   actions: {
@@ -16761,7 +16797,7 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     },
     requestAddons: function requestAddons(context) {
       axios.get('/getAddons').then(function (response) {
-        console.log(response.data.addons);
+        //console.log(response.data.addons);
         context.state.addonArray = response.data.addons;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen

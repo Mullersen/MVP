@@ -16,6 +16,8 @@ class CreateAddonsTable extends Migration
         Schema::create('addons', function (Blueprint $table) {
             $table->id();
             $table->string('activity');
+            $table->string('description');
+            $table->string('image');
             $table->smallInteger('price');
             $table->string('location');
             $table->timestamps();

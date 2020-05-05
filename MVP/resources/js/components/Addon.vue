@@ -6,13 +6,12 @@
         class="column is-one-quarter"
         v-for="(addon, index) in this.$store.state.addonArray"
         :key="index"
-        :class="{active: addon}"
       >
         <div @click="updateAddons(index)" class="card" :id="'addon' + index">
           <div class="card-image">
             <figure class="image is-4by3">
               <img
-                src="images/DSC00046.JPG"
+                :src="'images/'+addon.image"
                 alt="activity for Inside Canada in the Rocky Mountains"
               />
             </figure>
@@ -31,26 +30,31 @@
 <script>
 export default {
   name: "Addon",
+  data: function(){
+      return{
+          innerHTMLArr: [],
+      }
+  },
   methods: {
       updateAddons: function(index){
         var selectedAddon = document.getElementById("addon"+ index);
         if(selectedAddon.classList.contains("activeAddon") == true){
             selectedAddon.classList.remove("activeAddon")
-            //delete cookie with addon in it
         } else{
             selectedAddon.classList.add("activeAddon");
-            //add cookie with addon
         }
 
-        var allCards = document.querySelectorAll(".activeAddon .title");
-        for (var i=0; i<=allCards.length; i++){
-            var titleData = allCards.innerHTML[i];
+        //select all chosen addons and turn into cookie
+        var allCards = document.querySelectorAll(".activeAddon");
+        var allCardsArr = Array.from(allCards);
+        var newArr = allCardsArr.map(i => i.innerText);
+        this.$store.commit('updateAddons', newArr);
+        if (newArr.length > 0){ //don't stringify an empty array
+            var json_str = JSON.stringify(newArr);
+            document.cookie = "addons=" + json_str + "";
         }
-        console.log(titleData);
-        var json_str = JSON.stringify(allCards);
-        document.cookie = "addons=" + json_str + "";
       },
-  }
+  },
 };
 </script>
 
