@@ -2069,6 +2069,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2109,6 +2113,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Transport",
@@ -2122,14 +2141,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateTransportLoadAddons: function updateTransportLoadAddons(index) {
-      this.$store.commit('updateQuote', this.$store.state.transportationArray[index].transport_method);
+      this.$store.commit("updateQuote", this.$store.state.transportationArray[index].transport_method);
       document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method + "";
       this.toggleState = true;
-      this.$store.dispatch('requestAddons');
+      this.$store.dispatch("requestAddons");
     }
   },
   mounted: function mounted() {
-    this.$store.dispatch('requestTransportation');
+    this.$store.dispatch("requestTransportation");
   }
 });
 
@@ -2166,7 +2185,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#welcomeHero{\n    display:none;\n}\n#canadaTitle{\n    font-size:8rem;\n}\n.carouselImg{\n    height:auto;\n    width:auto;\n    overflow:hidden;\n}\n#virtualTrip{\n    border-bottom: 3px solid #111A2E;\n    padding: 3rem 0 1rem 0;\n    margin-bottom: 2rem;\n}\n.navbar-background{\n    background-color: #111A2E !important;\n}\n@media (max-width: 500px){\n#heroWrapper{\n        height:50vh !important;\n        background-image: url('/images/Norquay-lookout.JPG');\n        background-repeat: no-repeat;\n        background-size: cover;\n}\n#canadaTitle{\n        font-size:3rem;\n}\n#welcomeCarousel{\n        display:none;\n}\n#welcomeHero{\n        display:inline;\n}\n#heroImg{\n        opacity: 0.3;\n}\n}\n", ""]);
+exports.push([module.i, "\n#welcomeHero {\n  display: none;\n}\n#canadaTitle {\n  font-size: 8rem;\n}\n.carouselImg {\n  height: auto;\n  width: auto;\n  overflow: hidden;\n}\n#virtualTrip {\n  border-bottom: 3px solid #111a2e;\n  padding: 3rem 0 1rem 0;\n  margin-bottom: 2rem;\n}\n.navbar-background {\n  background-color: #111a2e !important;\n}\n@media (max-width: 500px) {\n#heroWrapper {\n    height: 50vh !important;\n    background-image: url(\"/images/Norquay-lookout.JPG\");\n    background-repeat: no-repeat;\n    background-size: cover;\n}\n#canadaTitle {\n    font-size: 3rem;\n}\n#welcomeCarousel {\n    display: none;\n}\n#welcomeHero {\n    display: inline;\n}\n#heroImg {\n    opacity: 0.3;\n}\n}\n", ""]);
 
 // exports
 
@@ -3455,9 +3474,13 @@ var render = function() {
         [
           _c("h1", { staticClass: "title is-2" }, [_vm._v("The route")]),
           _vm._v(" "),
-          _c("img", { attrs: { src: "images/routeMap.JPG", alt: "" } }),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("hr", { staticClass: "hr" }),
           _vm._v(" "),
           _c("Transport"),
+          _vm._v(" "),
+          _c("hr", { staticClass: "hr" }),
           _vm._v(" "),
           _c("Cart")
         ],
@@ -3466,7 +3489,21 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("figure", { staticClass: "image is-3by2" }, [
+      _c("img", {
+        attrs: {
+          src: "images/routeMap.JPG",
+          alt: "The shortest of Inside Canadas routes"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -3488,45 +3525,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "has-text-centered" }, [
-    _c("p", { staticClass: "content" }, [
-      _vm._v(
-        "We have come up with what we think is a really good route for the time you are in Canada. You have a bunch of options to choose from on the route. Along the way we will bring you on a virtual trip. All pictures are clickable, and will show you what your choices will look like on your trip. "
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "tile is-ancestor is-vertical" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "tile is-parent" },
+        _vm._l(this.$store.state.transportationArray, function(
+          transportation,
+          index
+        ) {
+          return _c(
+            "div",
+            {
+              key: transportation.id,
+              staticClass: "tile is-child box",
+              on: {
+                click: function($event) {
+                  return _vm.updateTransportLoadAddons(index)
+                }
+              }
+            },
+            [
+              _c("p", { staticClass: "subtitle" }, [
+                _vm._v(
+                  "I want to travel by " +
+                    _vm._s(transportation.transport_method)
+                )
+              ])
+            ]
+          )
+        }),
+        0
       )
     ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "columns" },
-      _vm._l(this.$store.state.transportationArray, function(
-        transportation,
-        index
-      ) {
-        return _c(
-          "h2",
-          {
-            key: transportation.id,
-            staticClass: "column is-half title",
-            on: {
-              click: function($event) {
-                return _vm.updateTransportLoadAddons(index)
-              }
-            }
-          },
-          [
-            _vm._v(
-              " I want to travel by " + _vm._s(transportation.transport_method)
-            )
-          ]
-        )
-      }),
-      0
-    ),
     _vm._v(" "),
     _vm.toggleState == true ? _c("div", [_c("Addon")], 1) : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tile is-12 is-parent" }, [
+      _c("div", { staticClass: "tile is-child box" }, [
+        _c("p", { staticClass: "content has-text-centered" }, [
+          _vm._v(
+            "We have come up with what we think is a really good route for the time you are in Canada. You have a bunch of options to choose from on the route. Along the way we will bring you on a virtual trip. All pictures are clickable, and will show you what your choices will look like on your trip."
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
