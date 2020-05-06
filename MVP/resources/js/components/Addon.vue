@@ -39,31 +39,27 @@ export default {
   methods: {
     updateAddons: function(index) {
       var selectedAddon = document.getElementById("addon" + index);
-      //console.log(selectedAddon);
       if (selectedAddon.classList.contains("activeAddon")) {
         selectedAddon.classList.remove("activeAddon");
       } else {
         selectedAddon.classList.add("activeAddon");
       }
 
-      //select all chosen addons and turn into cookie with ids
+      //select all chosen addons and turn into cookie with ids - if no addons, delete cookie
       var allActiveCards = document.querySelectorAll(".activeAddon");
       if(allActiveCards){
         var allActiveCardsArr = Array.from(allActiveCards);
         var newArr = allActiveCardsArr.map(i => i.firstChild.innerHTML);
-
         var json_str = JSON.stringify(newArr);
         document.cookie = "addons=" + json_str + "";
       } else {
           document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       }
-
     },
     checkIfActive: function(){
         this.$store.state.addonArray.forEach(addonToCheck =>{
-            //console.log(addonToCheck.id);
             this.cookieAddonArray.forEach(element => {
-                console.log(element + " " + addonToCheck.id);
+                //console.log(element + " " + addonToCheck.id);
                 if(element == addonToCheck.id){
                     this.updateAddons(element);
                 };
@@ -82,10 +78,8 @@ export default {
         }
         if (cookie.indexOf(param) == 0) {
             this.cookieAddonArray = JSON.parse(cookie.substring(param.length + 1, cookie.length));
-          return cookie.substring(param.length + 1, cookie.length);
         }
       }
-      return "There was no such cookie";
     }
   },
   updated(){

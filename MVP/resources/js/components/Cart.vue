@@ -30,17 +30,10 @@ export default {
   },
   methods: {
     getAddons: function() {
-         axios.post('/cart/getAddons', {
-             id : JSON.parse(this.getCookie("addons")),
-         })
-        .then(response => {
-            //console.log(response.data.chosenAddons);
-            var chosenActivities = response.data.chosenAddons.map(i=> i.activity);
-            this.$store.commit('updateChosenAddons', chosenActivities);
-        })
-        .catch(error => {
-            console.log(error.message); // change to error message on screen
-        });
+        setInterval(() =>{
+            var payload = JSON.parse(this.getCookie('addons'));
+            this.$store.dispatch('getChosenAddons', payload);
+        }, 3000);
     },
     getCookie: function(param) {
       var name = param + "=";
@@ -60,7 +53,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getChosenAddons");
+    this.getAddons();
   }
 };
 </script>

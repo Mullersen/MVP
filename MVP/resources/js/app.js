@@ -45,19 +45,20 @@ const appStore = new Vuex.Store({
                     console.log(error.message); // change to error message on screen
                 });
         },
-        // getChosenAddons: function(context) {
-        //     axios.post('/cart/getAddons', {
-        //             id: JSON.parse(this.getCookie("addons")),
-        //         })
-        //         .then(response => {
-        //             //console.log(response.data.chosenAddons);
-        //             var chosenActivities = response.data.chosenAddons.map(i => i.activity);
-        //             this.$store.commit('updateChosenAddons', chosenActivities);
-        //         })
-        //         .catch(error => {
-        //             console.log(error.message); // change to error message on screen
-        //         });
-        // },
+        getChosenAddons: function(context, payload) {
+            axios.post('/cart/getAddons', {
+                    id: payload,
+                })
+                .then(response => {
+                    console.log(response.data.chosenAddons);
+                    var chosenActivities = response.data.chosenAddons.map(i => i.activity);
+                    console.log(chosenActivities);
+                    context.state.chosenAddons = chosenActivities;
+                })
+                .catch(error => {
+                    console.log(error.message); // change to error message on screen
+                });
+        },
     }
 });
 

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1947,13 +1947,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateAddons: function updateAddons(index) {
-      var selectedAddon = document.getElementById("addon" + index); //console.log(selectedAddon);
+      var selectedAddon = document.getElementById("addon" + index);
 
       if (selectedAddon.classList.contains("activeAddon")) {
         selectedAddon.classList.remove("activeAddon");
       } else {
         selectedAddon.classList.add("activeAddon");
-      } //select all chosen addons and turn into cookie with ids
+      } //select all chosen addons and turn into cookie with ids - if no addons, delete cookie
 
 
       var allActiveCards = document.querySelectorAll(".activeAddon");
@@ -1973,10 +1973,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$store.state.addonArray.forEach(function (addonToCheck) {
-        //console.log(addonToCheck.id);
         _this.cookieAddonArray.forEach(function (element) {
-          console.log(element + " " + addonToCheck.id);
-
+          //console.log(element + " " + addonToCheck.id);
           if (element == addonToCheck.id) {
             _this.updateAddons(element);
           }
@@ -2000,11 +1998,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (cookie.indexOf(param) == 0) {
           this.cookieAddonArray = JSON.parse(cookie.substring(param.length + 1, cookie.length));
-          return cookie.substring(param.length + 1, cookie.length);
         }
       }
-
-      return "There was no such cookie";
     }
   },
   updated: function updated() {
@@ -2057,18 +2052,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
     getAddons: function getAddons() {
       var _this = this;
 
-      axios.post('/cart/getAddons', {
-        id: JSON.parse(this.getCookie("addons"))
-      }).then(function (response) {
-        //console.log(response.data.chosenAddons);
-        var chosenActivities = response.data.chosenAddons.map(function (i) {
-          return i.activity;
-        });
+      setInterval(function () {
+        var payload = JSON.parse(_this.getCookie('addons'));
 
-        _this.$store.commit('updateChosenAddons', chosenActivities);
-      })["catch"](function (error) {
-        console.log(error.message); // change to error message on screen
-      });
+        _this.$store.dispatch('getChosenAddons', payload);
+      }, 3000);
     },
     getCookie: function getCookie(param) {
       var name = param + "=";
@@ -2092,7 +2080,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
     }
   },
   mounted: function mounted() {
-    this.$store.dispatch("getChosenAddons");
+    this.getAddons();
   }
 });
 
@@ -16907,20 +16895,21 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
-    } // getChosenAddons: function(context) {
-    //     axios.post('/cart/getAddons', {
-    //             id: JSON.parse(this.getCookie("addons")),
-    //         })
-    //         .then(response => {
-    //             //console.log(response.data.chosenAddons);
-    //             var chosenActivities = response.data.chosenAddons.map(i => i.activity);
-    //             this.$store.commit('updateChosenAddons', chosenActivities);
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message); // change to error message on screen
-    //         });
-    // },
-
+    },
+    getChosenAddons: function getChosenAddons(context, payload) {
+      axios.post('/cart/getAddons', {
+        id: payload
+      }).then(function (response) {
+        console.log(response.data.chosenAddons);
+        var chosenActivities = response.data.chosenAddons.map(function (i) {
+          return i.activity;
+        });
+        console.log(chosenActivities);
+        context.state.chosenAddons = chosenActivities;
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    }
   }
 });
 Vue.component('Root', __webpack_require__(/*! ./components/Root.vue */ "./resources/js/components/Root.vue")["default"]);
@@ -17244,14 +17233,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 1:
-/*!***********************************!*\
-  !*** multi ./resources/js/app.js ***!
-  \***********************************/
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /projects/MVP/MVP/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /projects/MVP/MVP/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /projects/MVP/MVP/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
