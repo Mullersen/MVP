@@ -34,7 +34,7 @@ export default {
   methods: {
     getAddons: function(param) {
       var parsed = JSON.parse(this.getCookie("addons"));
-      this.addonArray = parsed;
+
     },
     getCookie: function(param) {
       var name = param + "=";

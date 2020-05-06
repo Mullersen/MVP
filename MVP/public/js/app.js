@@ -1937,11 +1937,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Addon",
   data: function data() {
     return {
-      innerHTMLArr: []
+      innerHTMLArr: [],
+      cookieAddonArray: [],
+      newArr: []
     };
   },
   methods: {
@@ -1955,19 +1958,60 @@ __webpack_require__.r(__webpack_exports__);
       } //select all chosen addons and turn into cookie
 
 
-      var allCards = document.querySelectorAll(".activeAddon");
-      var allCardsArr = Array.from(allCards);
-      var newArr = allCardsArr.map(function (i) {
-        return i.innerText;
+      var allActiveCards = document.querySelectorAll(".activeAddon");
+      var allActiveCardsArr = Array.from(allActiveCards);
+      var newArr = allActiveCardsArr.map(function (i) {
+        return i.firstChild.innerHTML;
       });
-      this.$store.commit('updateAddons', newArr);
+      console.log(newArr);
+      this.$store.commit("updateAddons", newArr);
 
       if (newArr.length > 0) {
         //don't stringify an empty array
         var json_str = JSON.stringify(newArr);
         document.cookie = "addons=" + json_str + "";
       }
+    },
+    checkIfActive: function checkIfActive() {
+      var _this = this;
+
+      this.$store.state.addonArray.forEach(function (addonToCheck) {
+        //console.log(addonToCheck.id);
+        _this.cookieAddonArray.forEach(function (element) {
+          //console.log(element + " " + addonToCheck.id);
+          if (element == addonToCheck.id) {
+            _this.updateAddons(addonToCheck.id);
+          }
+
+          ;
+        });
+      });
+    },
+    checkCookie: function checkCookie(param) {
+      console.log("check cookie has been called with " + param);
+      var name = param + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(";");
+
+      for (var i = 0; i < ca.length; i++) {
+        var cookie = ca[i];
+
+        while (cookie.charAt(0) == " ") {
+          cookie = cookie.substring(1);
+        }
+
+        if (cookie.indexOf(param) == 0) {
+          this.cookieAddonArray = JSON.parse(cookie.substring(param.length + 1, cookie.length));
+          return cookie.substring(param.length + 1, cookie.length);
+        }
+      }
+
+      return "There was no such cookie";
     }
+  },
+  updated: function updated() {
+    this.checkCookie("addons");
+    this.checkIfActive();
   }
 });
 
@@ -2017,7 +2061,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getAddons: function getAddons(param) {
       var parsed = JSON.parse(this.getCookie("addons"));
-      this.addonArray = parsed;
     },
     getCookie: function getCookie(param) {
       var name = param + "=";
@@ -2128,6 +2171,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Transport",
@@ -2166,7 +2210,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.activeAddon{\n    background: grey;\n}\n", ""]);
+exports.push([module.i, "\n.activeAddon {\n  background: grey;\n}\n", ""]);
 
 // exports
 
@@ -3339,7 +3383,7 @@ var render = function() {
         return _c(
           "div",
           {
-            key: index,
+            key: addon.id,
             staticClass: "column is-one-quarter",
             attrs: { id: "cardContainer" }
           },
@@ -3356,6 +3400,12 @@ var render = function() {
                 }
               },
               [
+                _c(
+                  "div",
+                  { staticClass: "id", staticStyle: { display: "none" } },
+                  [_vm._v(_vm._s(addon.id))]
+                ),
+                _vm._v(" "),
                 _c("div", { staticClass: "card-image" }, [
                   _c("figure", { staticClass: "image is-4by3" }, [
                     _c("img", {
@@ -3560,6 +3610,8 @@ var render = function() {
         0
       )
     ]),
+    _vm._v(" "),
+    _c("hr", { staticClass: "hr" }),
     _vm._v(" "),
     _vm.toggleState == true ? _c("div", [_c("Addon")], 1) : _vm._e()
   ])

@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+    <hr class="hr">
     <div v-if="toggleState == true">
       <Addon />
     </div>

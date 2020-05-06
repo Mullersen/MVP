@@ -23,7 +23,7 @@ const appStore = new Vuex.Store({
         },
         updateAddons: function(state, data) {
             state.chosenAddons = data;
-        }
+        },
     },
     actions: {
         //find the methods of transportations stored in the database
@@ -51,10 +51,14 @@ const appStore = new Vuex.Store({
 });
 
 Vue.component('Root', require('./components/Root.vue').default);
+
 Vue.component('Cart', require('./components/Cart.vue').default);
 
 
-const app = new Vue({
+
+const app = new
+Vue({
     el: '#app',
+
     store: appStore
 });
