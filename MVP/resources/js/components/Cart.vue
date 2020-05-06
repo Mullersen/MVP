@@ -3,38 +3,44 @@
     <p class="title is-3">Cart</p>
     <!-- Show the transportation dynamically if on the main page -->
     <p class="subtitle is-3">Chosen method of transportation</p>
-    <p v-if="this.$store.state.transportation == !''">{{this.$store.state.transportation}}</p>
-    <p v-else>{{getCookie("transport")}}</p>
+    <p id="store" v-if="this.$store.state.transportation == !''">{{this.$store.state.transportation}}</p>
+    <p id="cookie" v-else>{{getCookie("transport")}}</p>
 
 
     <!-- <div v-for="transportation in this.$store.state.transportationArray" :key="transportation.id">
       <p v-if="transportation.transport_method == transportationMethod">{{transportation.price}} CAD</p>
     </div> -->
 
-    <!-- Show the addons dynamically if on the main page -->
     <p class="subtitle is-3">Chosen Addons</p>
-    <div id="state" v-if="this.$store.state.chosenAddons.length > 0">
+    <div id="state">
         <p v-for="addon in this.$store.state.chosenAddons" :key="addon">{{addon}}</p>
-    </div>
-    <div id="cookie" v-else>
-         <p v-for="addon in this.addonArray" :key="addon">{{addon}}</p>
     </div>
   </div>
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   name: "Cart",
   data: function() {
     return {
       transportationMethod: "",
-      addonArray: []
     };
   },
   methods: {
-    getAddons: function(param) {
-      var parsed = JSON.parse(this.getCookie("addons"));
-
+    getAddons: function() {
+         axios.post('/cart/getAddons', {
+             id : JSON.parse(this.getCookie("addons")),
+         })
+        .then(response => {
+            //console.log(response.data.chosenAddons);
+            var chosenActivities = response.data.chosenAddons.map(i=> i.activity);
+            this.$store.commit('updateChosenAddons', chosenActivities);
+        })
+        .catch(error => {
+            console.log(error.message); // change to error message on screen
+        });
     },
     getCookie: function(param) {
       var name = param + "=";
@@ -54,7 +60,7 @@ export default {
     }
   },
   mounted() {
-    this.getAddons();
+    this.$store.dispatch("getChosenAddons");
   }
 };
 </script>

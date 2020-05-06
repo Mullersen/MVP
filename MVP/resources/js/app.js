@@ -1,8 +1,3 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 const axios = require('axios');
 
 window.Vue = require('vue');
@@ -21,16 +16,19 @@ const appStore = new Vuex.Store({
         updateQuote: function(state, data) {
             state.transportation = data;
         },
-        updateAddons: function(state, data) {
+        updateChosenAddons: function(state, data) {
             state.chosenAddons = data;
         },
+        // updateAddons: fucntion(state, data){
+
+        // }
     },
     actions: {
         //find the methods of transportations stored in the database
         requestTransportation: function(context) {
             axios.get('/getTransportation')
                 .then(response => {
-                    console.log(response.data.transportation);
+                    //console.log(response.data.transportation);
                     context.state.transportationArray = response.data.transportation;
                 })
                 .catch(error => {
@@ -40,13 +38,26 @@ const appStore = new Vuex.Store({
         requestAddons: function(context) {
             axios.get('/getAddons')
                 .then(response => {
-                    //console.log(response.data.addons);
+                    console.log(response.data.addons);
                     context.state.addonArray = response.data.addons;
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen
                 });
-        }
+        },
+        // getChosenAddons: function(context) {
+        //     axios.post('/cart/getAddons', {
+        //             id: JSON.parse(this.getCookie("addons")),
+        //         })
+        //         .then(response => {
+        //             //console.log(response.data.chosenAddons);
+        //             var chosenActivities = response.data.chosenAddons.map(i => i.activity);
+        //             this.$store.commit('updateChosenAddons', chosenActivities);
+        //         })
+        //         .catch(error => {
+        //             console.log(error.message); // change to error message on screen
+        //         });
+        // },
     }
 });
 

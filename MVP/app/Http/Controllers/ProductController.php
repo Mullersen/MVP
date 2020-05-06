@@ -14,4 +14,8 @@ class ProductController extends Controller
         $addons = \App\Addon::all();
         return response()->json(['addons' => $addons]);
     }
+    function getCartAddons(Request $request){
+        $chosenAddons = \App\Addon::whereIn('id', $request->id)->get();
+        return response()->json(['chosenAddons' => $chosenAddons]);
+    }
 }

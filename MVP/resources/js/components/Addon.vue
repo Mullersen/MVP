@@ -8,7 +8,7 @@
         :key="addon.id"
       >
         <div @click="updateAddons(index)" class="card" :id="'addon' + index">
-        <div class="id" style="display:none">{{addon.id}}</div>
+        <div class="id" style="display:none">{{index}}</div>
           <div class="card-image">
             <figure class="image is-4by3">
               <img
@@ -33,44 +33,45 @@ export default {
   name: "Addon",
   data: function() {
     return {
-      innerHTMLArr: [],
       cookieAddonArray: [],
-      newArr: [],
     };
   },
   methods: {
     updateAddons: function(index) {
       var selectedAddon = document.getElementById("addon" + index);
-      if (selectedAddon.classList.contains("activeAddon") == true) {
+      //console.log(selectedAddon);
+      if (selectedAddon.classList.contains("activeAddon")) {
         selectedAddon.classList.remove("activeAddon");
       } else {
         selectedAddon.classList.add("activeAddon");
       }
 
-      //select all chosen addons and turn into cookie
+      //select all chosen addons and turn into cookie with ids
       var allActiveCards = document.querySelectorAll(".activeAddon");
-      var allActiveCardsArr = Array.from(allActiveCards);
-      var newArr = allActiveCardsArr.map(i => i.firstChild.innerHTML);
-      console.log(newArr);
-      this.$store.commit("updateAddons", newArr);
-      if (newArr.length > 0) {//don't stringify an empty array
+      if(allActiveCards){
+        var allActiveCardsArr = Array.from(allActiveCards);
+        var newArr = allActiveCardsArr.map(i => i.firstChild.innerHTML);
+
         var json_str = JSON.stringify(newArr);
         document.cookie = "addons=" + json_str + "";
+      } else {
+          document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       }
+
     },
     checkIfActive: function(){
         this.$store.state.addonArray.forEach(addonToCheck =>{
             //console.log(addonToCheck.id);
             this.cookieAddonArray.forEach(element => {
-                //console.log(element + " " + addonToCheck.id);
+                console.log(element + " " + addonToCheck.id);
                 if(element == addonToCheck.id){
-                    this.updateAddons(addonToCheck.id);
+                    this.updateAddons(element);
                 };
             });
         });
     },
     checkCookie: function(param) {
-      console.log("check cookie has been called with " + param);
+      //console.log("check cookie has been called with " + param);
       var name = param + "=";
       var decodedCookie = decodeURIComponent(document.cookie);
       var ca = decodedCookie.split(";");

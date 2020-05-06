@@ -1942,34 +1942,31 @@ __webpack_require__.r(__webpack_exports__);
   name: "Addon",
   data: function data() {
     return {
-      innerHTMLArr: [],
-      cookieAddonArray: [],
-      newArr: []
+      cookieAddonArray: []
     };
   },
   methods: {
     updateAddons: function updateAddons(index) {
-      var selectedAddon = document.getElementById("addon" + index);
+      var selectedAddon = document.getElementById("addon" + index); //console.log(selectedAddon);
 
-      if (selectedAddon.classList.contains("activeAddon") == true) {
+      if (selectedAddon.classList.contains("activeAddon")) {
         selectedAddon.classList.remove("activeAddon");
       } else {
         selectedAddon.classList.add("activeAddon");
-      } //select all chosen addons and turn into cookie
+      } //select all chosen addons and turn into cookie with ids
 
 
       var allActiveCards = document.querySelectorAll(".activeAddon");
-      var allActiveCardsArr = Array.from(allActiveCards);
-      var newArr = allActiveCardsArr.map(function (i) {
-        return i.firstChild.innerHTML;
-      });
-      console.log(newArr);
-      this.$store.commit("updateAddons", newArr);
 
-      if (newArr.length > 0) {
-        //don't stringify an empty array
+      if (allActiveCards) {
+        var allActiveCardsArr = Array.from(allActiveCards);
+        var newArr = allActiveCardsArr.map(function (i) {
+          return i.firstChild.innerHTML;
+        });
         var json_str = JSON.stringify(newArr);
         document.cookie = "addons=" + json_str + "";
+      } else {
+        document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       }
     },
     checkIfActive: function checkIfActive() {
@@ -1978,9 +1975,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.state.addonArray.forEach(function (addonToCheck) {
         //console.log(addonToCheck.id);
         _this.cookieAddonArray.forEach(function (element) {
-          //console.log(element + " " + addonToCheck.id);
+          console.log(element + " " + addonToCheck.id);
+
           if (element == addonToCheck.id) {
-            _this.updateAddons(addonToCheck.id);
+            _this.updateAddons(element);
           }
 
           ;
@@ -1988,7 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     checkCookie: function checkCookie(param) {
-      console.log("check cookie has been called with " + param);
+      //console.log("check cookie has been called with " + param);
       var name = param + "=";
       var decodedCookie = decodeURIComponent(document.cookie);
       var ca = decodedCookie.split(";");
@@ -2046,21 +2044,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cart",
   data: function data() {
     return {
-      transportationMethod: "",
-      addonArray: []
+      transportationMethod: ""
     };
   },
   methods: {
-    getAddons: function getAddons(param) {
-      var parsed = JSON.parse(this.getCookie("addons"));
+    getAddons: function getAddons() {
+      var _this = this;
+
+      axios.post('/cart/getAddons', {
+        id: JSON.parse(this.getCookie("addons"))
+      }).then(function (response) {
+        //console.log(response.data.chosenAddons);
+        var chosenActivities = response.data.chosenAddons.map(function (i) {
+          return i.activity;
+        });
+
+        _this.$store.commit('updateChosenAddons', chosenActivities);
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
     },
     getCookie: function getCookie(param) {
       var name = param + "=";
@@ -2084,7 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getAddons();
+    this.$store.dispatch("getChosenAddons");
   }
 });
 
@@ -3403,7 +3411,7 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "id", staticStyle: { display: "none" } },
-                  [_vm._v(_vm._s(addon.id))]
+                  [_vm._v(_vm._s(index))]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-image" }, [
@@ -3465,28 +3473,23 @@ var render = function() {
     ]),
     _vm._v(" "),
     this.$store.state.transportation == !""
-      ? _c("p", [_vm._v(_vm._s(this.$store.state.transportation))])
-      : _c("p", [_vm._v(_vm._s(_vm.getCookie("transport")))]),
+      ? _c("p", { attrs: { id: "store" } }, [
+          _vm._v(_vm._s(this.$store.state.transportation))
+        ])
+      : _c("p", { attrs: { id: "cookie" } }, [
+          _vm._v(_vm._s(_vm.getCookie("transport")))
+        ]),
     _vm._v(" "),
     _c("p", { staticClass: "subtitle is-3" }, [_vm._v("Chosen Addons")]),
     _vm._v(" "),
-    this.$store.state.chosenAddons.length > 0
-      ? _c(
-          "div",
-          { attrs: { id: "state" } },
-          _vm._l(this.$store.state.chosenAddons, function(addon) {
-            return _c("p", { key: addon }, [_vm._v(_vm._s(addon))])
-          }),
-          0
-        )
-      : _c(
-          "div",
-          { attrs: { id: "cookie" } },
-          _vm._l(this.addonArray, function(addon) {
-            return _c("p", { key: addon }, [_vm._v(_vm._s(addon))])
-          }),
-          0
-        )
+    _c(
+      "div",
+      { attrs: { id: "state" } },
+      _vm._l(this.$store.state.chosenAddons, function(addon) {
+        return _c("p", { key: addon }, [_vm._v(_vm._s(addon))])
+      }),
+      0
+    )
   ])
 }
 var staticRenderFns = []
@@ -16865,11 +16868,6 @@ module.exports = g;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -16886,15 +16884,17 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     updateQuote: function updateQuote(state, data) {
       state.transportation = data;
     },
-    updateAddons: function updateAddons(state, data) {
+    updateChosenAddons: function updateChosenAddons(state, data) {
       state.chosenAddons = data;
-    }
+    } // updateAddons: fucntion(state, data){
+    // }
+
   },
   actions: {
     //find the methods of transportations stored in the database
     requestTransportation: function requestTransportation(context) {
       axios.get('/getTransportation').then(function (response) {
-        console.log(response.data.transportation);
+        //console.log(response.data.transportation);
         context.state.transportationArray = response.data.transportation;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
@@ -16902,12 +16902,25 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     },
     requestAddons: function requestAddons(context) {
       axios.get('/getAddons').then(function (response) {
-        //console.log(response.data.addons);
+        console.log(response.data.addons);
         context.state.addonArray = response.data.addons;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
-    }
+    } // getChosenAddons: function(context) {
+    //     axios.post('/cart/getAddons', {
+    //             id: JSON.parse(this.getCookie("addons")),
+    //         })
+    //         .then(response => {
+    //             //console.log(response.data.chosenAddons);
+    //             var chosenActivities = response.data.chosenAddons.map(i => i.activity);
+    //             this.$store.commit('updateChosenAddons', chosenActivities);
+    //         })
+    //         .catch(error => {
+    //             console.log(error.message); // change to error message on screen
+    //         });
+    // },
+
   }
 });
 Vue.component('Root', __webpack_require__(/*! ./components/Root.vue */ "./resources/js/components/Root.vue")["default"]);
