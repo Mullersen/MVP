@@ -1976,6 +1976,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.cookieAddonArray.forEach(function (element) {
           //console.log(element + " " + addonToCheck.id);
           if (element == addonToCheck.id) {
+            console.log(element);
+
             _this.updateAddons(element);
           }
 
@@ -2002,7 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  updated: function updated() {
+  mounted: function mounted() {
     this.checkCookie("addons");
     this.checkIfActive();
   }
@@ -2112,6 +2114,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2184,11 +2201,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit("updateQuote", this.$store.state.transportationArray[index].transport_method);
       document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method + "";
       this.toggleState = true;
-      this.$store.dispatch("requestAddons");
     }
   },
   mounted: function mounted() {
     this.$store.dispatch("requestTransportation");
+    this.$store.dispatch("requestAddons");
   }
 });
 
@@ -3453,8 +3470,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("p", { staticClass: "title is-3" }, [_vm._v("Cart")]),
+  return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
     _vm._v(" "),
     _c("p", { staticClass: "subtitle is-3" }, [
       _vm._v("Chosen method of transportation")
@@ -3480,7 +3497,16 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "/cart" } }, [
+      _c("p", { staticClass: "title is-3" }, [_vm._v("Cart")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -3502,33 +3528,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    {
-      staticClass: "section is-medium has-background-primary",
-      attrs: { id: "virtualTrip" }
-    },
-    [
-      _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("h1", { staticClass: "title is-2" }, [_vm._v("The route")]),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("hr", { staticClass: "hr" }),
-          _vm._v(" "),
-          _c("Transport"),
-          _vm._v(" "),
-          _c("hr", { staticClass: "hr" }),
-          _vm._v(" "),
-          _c("Cart")
-        ],
-        1
-      )
-    ]
-  )
+  return _c("div", [
+    _c(
+      "section",
+      {
+        staticClass: "section is-medium has-background-primary",
+        attrs: { id: "virtualTrip" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "container" },
+          [
+            _c("h1", { staticClass: "title is-2" }, [_vm._v("The route")]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("hr", { staticClass: "hr" }),
+            _vm._v(" "),
+            _c("Transport"),
+            _vm._v(" "),
+            _c("hr", { staticClass: "hr" })
+          ],
+          1
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "quickview", attrs: { id: "quickviewDefault" } }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "quickview-body" }, [
+        _c("div", { staticClass: "quickview-block" }, [_c("Cart")], 1)
+      ]),
+      _vm._v(" "),
+      _c("footer", { staticClass: "quickview-footer" })
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -3541,6 +3577,21 @@ var staticRenderFns = [
           src: "images/routeMap.JPG",
           alt: "The shortest of Inside Canadas routes"
         }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "quickview-header" }, [
+      _c("p", { staticClass: "title has-text-primary" }, [
+        _vm._v("Quickview your Cart")
+      ]),
+      _vm._v(" "),
+      _c("span", {
+        staticClass: "delete",
+        attrs: { "data-dismiss": "quickview" }
       })
     ])
   }

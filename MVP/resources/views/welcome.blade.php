@@ -30,8 +30,8 @@
                         <div id="navMenu" class="navbar-menu has-text-white">
                             <div class="navbar-end">
                                 <a class="navbar-item" href="#virtualTrip">Virtual trip</a>
-                                <a class="navbar-item" href="/cart">Cart</a>
                                 <a class="navbar-item" href="#whoAreWe">Who are we</a>
+                                <a class="navbar-item" data-show="quickview" data-target="quickviewDefault">Cart</a>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
             </div>
         </section>
         <div id="app">
-            <Root/>
+        <Root/>
         </div>
 @endsection
 

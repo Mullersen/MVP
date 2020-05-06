@@ -1,16 +1,31 @@
 <template>
-  <section id="virtualTrip" class="section is-medium has-background-primary">
-    <div class="container">
+  <div>
+    <section id="virtualTrip" class="section is-medium has-background-primary">
+      <div class="container">
         <h1 class="title is-2">The route</h1>
         <figure class="image is-3by2">
           <img src="images/routeMap.JPG" alt="The shortest of Inside Canadas routes" />
         </figure>
-        <hr class="hr">
-      <Transport />
-      <hr class="hr">
-      <Cart />
+        <hr class="hr" />
+        <Transport />
+        <hr class="hr" />
+      </div>
+    </section>
+    <div id="quickviewDefault" class="quickview">
+      <header class="quickview-header">
+        <p class="title has-text-primary">Quickview your Cart</p>
+        <span class="delete" data-dismiss="quickview"></span>
+      </header>
+
+      <div class="quickview-body">
+        <div class="quickview-block">
+          <Cart />
+        </div>
+      </div>
+
+      <footer class="quickview-footer"></footer>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

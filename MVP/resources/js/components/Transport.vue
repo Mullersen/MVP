@@ -50,11 +50,11 @@ export default {
         this.$store.state.transportationArray[index].transport_method +
         "";
       this.toggleState = true;
-      this.$store.dispatch("requestAddons");
     }
   },
   mounted() {
     this.$store.dispatch("requestTransportation");
+    this.$store.dispatch("requestAddons");
   }
 };
 </script>

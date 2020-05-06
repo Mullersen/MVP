@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p class="title is-3">Cart</p>
+  <div class="container">
+    <a href="/cart"><p class="title is-3">Cart</p></a>
     <!-- Show the transportation dynamically if on the main page -->
     <p class="subtitle is-3">Chosen method of transportation</p>
     <p id="store" v-if="this.$store.state.transportation == !''">{{this.$store.state.transportation}}</p>

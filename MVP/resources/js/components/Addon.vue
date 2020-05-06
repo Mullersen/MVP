@@ -61,6 +61,7 @@ export default {
             this.cookieAddonArray.forEach(element => {
                 //console.log(element + " " + addonToCheck.id);
                 if(element == addonToCheck.id){
+                    console.log(element);
                     this.updateAddons(element);
                 };
             });
@@ -82,7 +83,7 @@ export default {
       }
     }
   },
-  updated(){
+  mounted(){
       this.checkCookie("addons");
       this.checkIfActive();
   }
