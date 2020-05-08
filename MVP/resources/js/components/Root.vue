@@ -31,12 +31,14 @@
 <script>
 import Transport from "./Transport.vue";
 import Cart from "./Cart.vue";
+import Adminroot from "./Adminroot.vue"
 
 export default {
   name: "Root",
   components: {
     Transport,
-    Cart
+    Cart,
+    Adminroot,
   },
   data: function() {
     return {

@@ -26,6 +26,7 @@ Route::get('/cart', function(){
 Route::post('/cart/getAddons', 'ProductController@getCartAddons');
 
 Route::get('/getAddons', 'ProductController@getAddons');
+Route::post('/addons/uploadAddon', 'ProductController@newAddon')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

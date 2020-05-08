@@ -66,7 +66,7 @@ Vue.component('Root', require('./components/Root.vue').default);
 
 Vue.component('Cart', require('./components/Cart.vue').default);
 
-
+Vue.component('Adminroot', require('./components/Adminroot.vue').default);
 
 const app = new
 Vue({

@@ -12,7 +12,7 @@
           <div class="card-image">
             <figure class="image is-4by3">
               <img
-                :src="'images/'+addon.image"
+                :src="addon.image"
                 alt="activity for Inside Canada in the Rocky Mountains"
               />
             </figure>
