@@ -2062,6 +2062,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2072,7 +2105,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       NewAddonDescription: "",
       NewAddonPrice: "",
       NewAddonLocations: "",
-      file: ""
+      file: "",
+      id: ""
     };
   },
   methods: {
@@ -2081,6 +2115,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       console.log(this.file);
     },
     uploadAddon: function uploadAddon() {
+      var _this = this;
+
       var formData = new FormData();
       formData.append('image', this.file);
       formData.append('title', this.NewAddonTitle);
@@ -2094,10 +2130,37 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         }
       }).then(function (response) {
         console.log(response.data);
+
+        _this.$store.dispatch("requestAddons");
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    },
+    promptQuestion: function promptQuestion(index) {
+      this.id = document.getElementById("addon" + index).firstChild.innerHTML;
+      document.getElementById('hidden').classList.add('visible');
+    },
+    goBack: function goBack() {
+      document.getElementById('hidden').classList.remove('visible');
+    },
+    deleteAddon: function deleteAddon() {
+      var _this2 = this;
+
+      axios.post('/addons/deleteAddon', {
+        id: this.id
+      }).then(function (response) {
+        console.log(response.data);
+
+        _this2.goBack();
+
+        _this2.$store.dispatch("requestAddons");
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
     }
+  },
+  mounted: function mounted() {
+    this.$store.dispatch("requestAddons");
   }
 });
 
@@ -2118,8 +2181,103 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Admincarousel"
+  name: "Admincarousel",
+  data: function data() {
+    return {
+      file: "",
+      imageArray: []
+    };
+  },
+  methods: {
+    handleFileUpload: function handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+      console.log(this.file);
+    },
+    uploadCarouselImage: function uploadCarouselImage() {
+      var _this = this;
+
+      var formData = new FormData();
+      formData.append('image', this.file);
+      axios.post('/carousel/uploadImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then(function (response) {
+        console.log(response.data);
+
+        _this.requestCarouselImages();
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    },
+    deleteCarouselImage: function deleteCarouselImage(index) {
+      var _this2 = this;
+
+      var chosenImage = document.getElementById("image" + index).firstChild.innerHTML;
+      axios.post('/carousel/deleteImage', {
+        id: chosenImage
+      }).then(function (response) {
+        console.log(response.data);
+
+        _this2.requestCarouselImages();
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    },
+    requestCarouselImages: function requestCarouselImages() {
+      var _this3 = this;
+
+      axios.get('/carousel/requestImages').then(function (response) {
+        console.log(response.data);
+        _this3.imageArray = response.data.carouselImages;
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.requestCarouselImages();
+  }
 });
 
 /***/ }),
@@ -2173,6 +2331,22 @@ __webpack_require__.r(__webpack_exports__);
       toggleCarousel: false,
       toggleAddons: false
     };
+  },
+  methods: {
+    addonToggle: function addonToggle() {
+      if (this.toggleCarousel == true) {
+        this.toggleCarousel = false;
+      }
+
+      this.toggleAddons = true;
+    },
+    carouselToggle: function carouselToggle() {
+      if (this.toggleAddons == true) {
+        this.toggleAddons = false;
+      }
+
+      this.toggleCarousel = true;
+    }
   }
 });
 
@@ -2393,6 +2567,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.activeAddon {\n  background: grey;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#hidden{\n    display:none;\n}\n.visible{\n    display:block !important;\n    position: fixed;\n    width: 50vw;\n    height: 25vh;\n    top: 25vh;\n    left: 25vw;\n    background-color: grey;\n}\n\n", ""]);
 
 // exports
 
@@ -2907,6 +3100,36 @@ process.umask = function() { return 0; };
 
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Addon.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Addon.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Adminaddon.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -3585,7 +3808,7 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "id", staticStyle: { display: "none" } },
-                  [_vm._v(_vm._s(index))]
+                  [_vm._v(_vm._s(addon.id))]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-image" }, [
@@ -3605,7 +3828,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "subtitle is-6" }, [
-                    _vm._v(_vm._s(addon.price))
+                    _vm._v(_vm._s(addon.price) + " CAD")
                   ])
                 ])
               ]
@@ -3640,143 +3863,231 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("p", { staticClass: "subtitle" }, [_vm._v("this is the addons")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Name of new Addon")]),
+    _c("div", { staticClass: "box" }, [
+      _c("p", { staticClass: "subtitle" }, [_vm._v("Create new addon")]),
       _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewAddonTitle,
-              expression: "NewAddonTitle"
-            }
-          ],
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Title" },
-          domProps: { value: _vm.NewAddonTitle },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewAddonTitle,
+                expression: "NewAddonTitle"
               }
-              _vm.NewAddonTitle = $event.target.value
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Description")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewAddonDescription,
-              expression: "NewAddonDescription"
-            }
-          ],
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Description" },
-          domProps: { value: _vm.NewAddonDescription },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+            ],
+            staticClass: "input",
+            attrs: { type: "text", placeholder: "Title" },
+            domProps: { value: _vm.NewAddonTitle },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewAddonTitle = $event.target.value
               }
-              _vm.NewAddonDescription = $event.target.value
             }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Image")]),
+          })
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          ref: "file",
-          staticClass: "input",
-          attrs: { id: "file", type: "file" },
-          on: {
-            change: function($event) {
-              return _vm.handleFileUpload()
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Price")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewAddonPrice,
-              expression: "NewAddonPrice"
-            }
-          ],
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Price" },
-          domProps: { value: _vm.NewAddonPrice },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewAddonDescription,
+                expression: "NewAddonDescription"
               }
-              _vm.NewAddonPrice = $event.target.value
+            ],
+            staticClass: "input",
+            attrs: { type: "text", placeholder: "Description" },
+            domProps: { value: _vm.NewAddonDescription },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewAddonDescription = $event.target.value
+              }
             }
-          }
-        })
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Image")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            ref: "file",
+            staticClass: "input",
+            attrs: { id: "file", type: "file" },
+            on: {
+              change: function($event) {
+                return _vm.handleFileUpload()
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Price")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewAddonPrice,
+                expression: "NewAddonPrice"
+              }
+            ],
+            staticClass: "input",
+            attrs: { type: "text", placeholder: "Price" },
+            domProps: { value: _vm.NewAddonPrice },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewAddonPrice = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Locations")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewAddonLocations,
+                expression: "NewAddonLocations"
+              }
+            ],
+            staticClass: "input",
+            attrs: {
+              type: "text",
+              placeholder: "Locations, separated by a space"
+            },
+            domProps: { value: _vm.NewAddonLocations },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewAddonLocations = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control" }, [
+          _c(
+            "button",
+            { staticClass: "button", on: { click: _vm.uploadAddon } },
+            [_vm._v("Submit")]
+          )
+        ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Locations")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewAddonLocations,
-              expression: "NewAddonLocations"
-            }
-          ],
-          staticClass: "input",
-          attrs: {
-            type: "text",
-            placeholder: "Locations, separated by a space"
+    _c(
+      "div",
+      { staticClass: "columns is-multiline" },
+      _vm._l(this.$store.state.addonArray, function(addon, index) {
+        return _c(
+          "div",
+          {
+            key: addon.id,
+            staticClass: "column is-one-quarter",
+            attrs: { id: "cardContainer" }
           },
-          domProps: { value: _vm.NewAddonLocations },
+          [
+            _c("div", { staticClass: "card", attrs: { id: "addon" + index } }, [
+              _c(
+                "div",
+                { staticClass: "id", staticStyle: { display: "none" } },
+                [_vm._v(_vm._s(addon.id))]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-image" }, [
+                _c("figure", { staticClass: "image is-4by3" }, [
+                  _c("img", {
+                    attrs: {
+                      src: addon.image,
+                      alt: "activity for Inside Canada in the Rocky Mountains"
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-content" }, [
+                _c("p", { staticClass: "title is-4 has-text-dark" }, [
+                  _vm._v(_vm._s(addon.activity))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "subtitle is-6" }, [
+                  _vm._v(_vm._s(addon.price) + " CAD")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.promptQuestion(index)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          ]
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "box", attrs: { id: "hidden" } }, [
+      _c("p", { staticClass: "title" }, [
+        _vm._v("Are you sure you want to delete this Addon?")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "button",
           on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.NewAddonLocations = $event.target.value
+            "~click": function($event) {
+              return _vm.deleteAddon($event)
             }
           }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control" }, [
-        _c("button", { on: { click: _vm.uploadAddon } }, [_vm._v("Submit")])
+        },
+        [_vm._v("Yes")]
+      ),
+      _vm._v(" "),
+      _c("button", { staticClass: "button", on: { click: _vm.goBack } }, [
+        _vm._v("No, take me back")
       ])
     ])
   ])
@@ -3803,16 +4114,90 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "box" }, [
+      _c("p", { staticClass: "subtitle" }, [
+        _vm._v("Upload image to carousel")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Image")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            ref: "file",
+            staticClass: "input",
+            attrs: { id: "file", type: "file" },
+            on: {
+              change: function($event) {
+                return _vm.handleFileUpload()
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control" }, [
+          _c(
+            "button",
+            { staticClass: "button", on: { click: _vm.uploadCarouselImage } },
+            [_vm._v("Submit")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "columns is-multiline" },
+      _vm._l(this.imageArray, function(image, index) {
+        return _c(
+          "div",
+          {
+            key: image.id,
+            staticClass: "column is-one-third",
+            attrs: { id: "cardContainer" }
+          },
+          [
+            _c("div", { staticClass: "card", attrs: { id: "image" + index } }, [
+              _c(
+                "div",
+                { staticClass: "id", staticStyle: { display: "none" } },
+                [_vm._v(_vm._s(image.id))]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-image" }, [
+                _c("figure", { staticClass: "image is-4by3" }, [
+                  _c("img", {
+                    attrs: { src: image.images, alt: "carousel image" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-content" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-primary",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteCarouselImage(index)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              ])
+            ])
+          ]
+        )
+      }),
+      0
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("p", [_vm._v("This is the carousel")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -3840,11 +4225,7 @@ var render = function() {
         "div",
         {
           staticClass: "column is-one-quarter",
-          staticStyle: {
-            "border-right": "1px grey solid",
-            height: "100vh",
-            padding: "2rem"
-          }
+          staticStyle: { padding: "2rem" }
         },
         [
           _c("aside", { staticClass: "menu" }, [
@@ -3857,7 +4238,7 @@ var render = function() {
                   {
                     on: {
                       click: function($event) {
-                        _vm.toggleAddons = true
+                        return _vm.addonToggle()
                       }
                     }
                   },
@@ -3871,7 +4252,7 @@ var render = function() {
                   {
                     on: {
                       click: function($event) {
-                        _vm.toggleCarousel = true
+                        return _vm.carouselToggle()
                       }
                     }
                   },
@@ -3884,9 +4265,14 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("div", { staticClass: "column has-text-centered" }, [
-        _c("p", { staticClass: "title has-text-primary" }, [
-          _vm._v("You are logged in as admin!")
-        ]),
+        _c(
+          "p",
+          {
+            staticClass: "title has-text-primary",
+            staticStyle: { "padding-top": "1rem" }
+          },
+          [_vm._v("You are logged in as admin!")]
+        ),
         _vm._v(" "),
         _vm.toggleAddons == true ? _c("div", [_c("Adminaddon")], 1) : _vm._e(),
         _vm._v(" "),
@@ -17520,7 +17906,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Adminaddon_vue_vue_type_template_id_69689708___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Adminaddon.vue?vue&type=template&id=69689708& */ "./resources/js/components/Adminaddon.vue?vue&type=template&id=69689708&");
 /* harmony import */ var _Adminaddon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Adminaddon.vue?vue&type=script&lang=js& */ "./resources/js/components/Adminaddon.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Adminaddon.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -17528,7 +17916,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Adminaddon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Adminaddon_vue_vue_type_template_id_69689708___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Adminaddon_vue_vue_type_template_id_69689708___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -17557,6 +17945,22 @@ component.options.__file = "resources/js/components/Adminaddon.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Adminaddon.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Adminaddon.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Adminaddon.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Adminaddon.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Adminaddon_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

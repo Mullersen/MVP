@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -19,11 +20,14 @@ class ProductController extends Controller
         return response()->json(['chosenAddons' => $chosenAddons]);
     }
     function newAddon(Request $request){
-        // $request->validate([
-        //     'title'          =>  'required',
+        try{
+            $this->validate($request,[
+                'image'     =>  'required|mimes:jpeg,png,jpg,gif|max:7000'
+            ]);
+        } catch (ValidationException $error){
+            return response()->json($error->validator->errors());
+        }
 
-        //     'image'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        // ]);
         //error_log($request->title);
         $newAddon = new \App\Addon;
         $newAddon->image = $request->file('image')->store('uploads');
@@ -35,4 +39,8 @@ class ProductController extends Controller
 
         return response()->json(['success' => 'good']);
     }
+    function deleteAddon(Request $request){
+        \App\Addon::where('id', '=', $request->id)->delete();
+        return response()->json(['addon' => 'deleted']);
+        }
 }

@@ -4,15 +4,11 @@
     <div>
         <section id="heroWrapper" class="hero is-primary is-fullheight has-carousel">
             <div id="welcomeCarousel" class="hero-carousel">
+                @foreach($carouselImages as $carouselImage)
                 <div class="carousel has-background">
-                    <img class="carouselImg" src="images/Norquay-lookout.JPG" alt="">
+                    <img class="carouselImg" src="{{$carouselImage->images}}" alt="Inside Canada is a small Denmark-based travel agency, selling travels to Canada">
                 </div>
-                <div class="carousel has-background">
-                    <img class="carouselImg" src="images/DSC00170.JPG" alt="">
-                </div>
-                <div class="carousel has-background">
-                    <img class="carouselImg" src="images/DSC00046.JPG" alt="">
-                </div>
+                @endforeach
             </div>
             <div class="hero-head">
                 <nav id="myNavbar" class="navbar is-fixed-top" role="navigation" aria-label="main navigation">

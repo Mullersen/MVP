@@ -8,7 +8,7 @@
         :key="addon.id"
       >
         <div @click="updateAddons(index)" class="card" :id="'addon' + index">
-        <div class="id" style="display:none">{{index}}</div>
+        <div class="id" style="display:none">{{addon.id}}</div>
           <div class="card-image">
             <figure class="image is-4by3">
               <img
@@ -19,7 +19,7 @@
           </div>
           <div class="card-content">
             <p class="title is-4 has-text-dark">{{addon.activity}}</p>
-            <p class="subtitle is-6">{{addon.price}}</p>
+            <p class="subtitle is-6">{{addon.price}} CAD</p>
             <!-- <p class="content">{{description}}</p> -->
           </div>
         </div>
