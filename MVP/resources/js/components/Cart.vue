@@ -29,8 +29,13 @@
           <span>{{addon.price}} CAD</span>
         </p>
       </div>
-    </div>p
-    <button>Continue</button>
+    </div>
+    <button class="button" @click="togglePrice = true">Continue</button>
+    <div v-if="togglePrice == true">
+      <h2 class="subtitle">The final price</h2>
+      <h2 class="subtitle">{{this.finalPrice}} CAD</h2>
+      <a href="/checkout"><button class="button">Checkout</button></a>
+    </div>
   </div>
 </template>
 
@@ -41,31 +46,31 @@ export default {
   name: "Cart",
   data: function() {
     return {
-      priceArray: []
+      priceArray: [],
+      togglePrice: false,
+      finalPrice: ""
     };
   },
   methods: {
     sumPrices: function() {
-      this.$store.state.transportationArray.forEach(element => {
-          console.log(element.transport_method);
-        if (element.transport_method == this.getCookie("transport")) {
-            console.log(element.price);
+      setTimeout(() => {
+        this.$store.state.transportationArray.forEach(element => {
+          if (element.transport_method == this.getCookie("transport")) {
+            this.priceArray.push(element.price);
+          }
+        });
+        this.$store.state.chosenAddons.forEach(element => {
           this.priceArray.push(element.price);
-        }
-      });
-      this.$store.state.chosenAddons.forEach(element => {
-        this.priceArray.push(element.price);
-      });
-      this.priceArray.push(this.$store.state.chosenRoute[0].price);
-      console.log(this.priceArray);
-      var sum = this.priceArray.reduce((a, b)=> a+ b, 0);
-      console.log(sum);
+        });
+        this.priceArray.push(this.$store.state.chosenRoute[0].price);
+        this.finalPrice = this.priceArray.reduce((a, b) => a + b, 0);
+      }, 4000);
     },
     updateCartChoices: function() {
       setInterval(() => {
         var payload = JSON.parse(this.getCookie("addons"));
         this.$store.dispatch("getChosenAddons", payload);
-      }, 3000);
+      }, 2000);
       this.$store.dispatch("requestTransportation");
       this.$store.dispatch("requestRoutes");
     },
@@ -88,7 +93,7 @@ export default {
   beforeMount() {
     this.updateCartChoices();
   },
-  mounted(){
+  mounted() {
     this.sumPrices();
   }
 };

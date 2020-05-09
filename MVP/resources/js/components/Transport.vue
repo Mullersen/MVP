@@ -53,16 +53,13 @@ export default {
         "transport=" +
         this.$store.state.transportationArray[index].transport_method;
       this.toggleState = true;
-      this.$store.dispatch('requestRoutes');
-      document.cookie = 
-      "route=" +  this.$store.state.chosenRoute;
 
+      document.cookie = "route=" + this.$store.state.chosenRoute;
     }
   },
   mounted() {
     this.$store.dispatch("requestTransportation");
     this.$store.dispatch("requestAddons");
-    
   }
 };
 </script>

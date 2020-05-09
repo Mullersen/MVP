@@ -54,7 +54,9 @@ export default {
       carouselToggleState: false
     };
   },
-  methods: {}
+  mounted(){
+      this.$store.dispatch('requestRoutes');
+  }
 };
 </script>
 <style>

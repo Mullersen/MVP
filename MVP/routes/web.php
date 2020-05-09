@@ -18,6 +18,9 @@ Auth::routes(['/register' => false]);
 Route::get('/', 'HomeController@getImages');
 Route::get('/getTransportation', 'ProductController@getTransportation');
 Route::get('/getRoutes', 'ProductController@getRoutes');
+Route::get('/checkout', function(){
+    return view('checkout');
+});
 
 Route::get('/cart', function(){
     return view('cart');

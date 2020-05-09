@@ -2412,37 +2412,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cart",
   data: function data() {
     return {
-      priceArray: []
+      priceArray: [],
+      togglePrice: false,
+      finalPrice: ""
     };
   },
   methods: {
     sumPrices: function sumPrices() {
       var _this = this;
 
-      this.$store.state.transportationArray.forEach(function (element) {
-        console.log(element.transport_method);
+      setTimeout(function () {
+        _this.$store.state.transportationArray.forEach(function (element) {
+          if (element.transport_method == _this.getCookie("transport")) {
+            _this.priceArray.push(element.price);
+          }
+        });
 
-        if (element.transport_method == _this.getCookie("transport")) {
-          console.log(element.price);
-
+        _this.$store.state.chosenAddons.forEach(function (element) {
           _this.priceArray.push(element.price);
-        }
-      });
-      this.$store.state.chosenAddons.forEach(function (element) {
-        _this.priceArray.push(element.price);
-      });
-      this.priceArray.push(this.$store.state.chosenRoute[0].price);
-      console.log(this.priceArray);
-      var sum = this.priceArray.reduce(function (a, b) {
-        return a + b;
-      }, 0);
-      console.log(sum);
+        });
+
+        _this.priceArray.push(_this.$store.state.chosenRoute[0].price);
+
+        _this.finalPrice = _this.priceArray.reduce(function (a, b) {
+          return a + b;
+        }, 0);
+      }, 4000);
     },
     updateCartChoices: function updateCartChoices() {
       var _this2 = this;
@@ -2451,7 +2457,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         var payload = JSON.parse(_this2.getCookie("addons"));
 
         _this2.$store.dispatch("getChosenAddons", payload);
-      }, 3000);
+      }, 2000);
       this.$store.dispatch("requestTransportation");
       this.$store.dispatch("requestRoutes");
     },
@@ -2551,7 +2557,9 @@ __webpack_require__.r(__webpack_exports__);
       carouselToggleState: false
     };
   },
-  methods: {}
+  mounted: function mounted() {
+    this.$store.dispatch('requestRoutes');
+  }
 });
 
 /***/ }),
@@ -2614,7 +2622,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit("updateChosenTransportation", this.$store.state.transportationArray[index].transport_method);
       document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method;
       this.toggleState = true;
-      this.$store.dispatch('requestRoutes');
       document.cookie = "route=" + this.$store.state.chosenRoute;
     }
   },
@@ -4504,8 +4511,31 @@ var render = function() {
         0
       )
     ]),
-    _vm._v("p\n  "),
-    _c("button", [_vm._v("Continue")])
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "button",
+        on: {
+          click: function($event) {
+            _vm.togglePrice = true
+          }
+        }
+      },
+      [_vm._v("Continue")]
+    ),
+    _vm._v(" "),
+    _vm.togglePrice == true
+      ? _c("div", [
+          _c("h2", { staticClass: "subtitle" }, [_vm._v("The final price")]),
+          _vm._v(" "),
+          _c("h2", { staticClass: "subtitle" }, [
+            _vm._v(_vm._s(this.finalPrice) + " CAD")
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -4522,6 +4552,14 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "/checkout" } }, [
+      _c("button", { staticClass: "button" }, [_vm._v("Checkout")])
+    ])
   }
 ]
 render._withStripped = true
