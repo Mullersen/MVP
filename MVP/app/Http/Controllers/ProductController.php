@@ -15,19 +15,15 @@ class ProductController extends Controller
         $addons = \App\Addon::all();
         return response()->json(['addons' => $addons]);
     }
+    function getRoutes(){
+        $routes = \App\Route::all();
+        return response()->json(['routes' => $routes]);
+    }
     function getCartAddons(Request $request){
         $chosenAddons = \App\Addon::whereIn('id', $request->id)->get();
         return response()->json(['chosenAddons' => $chosenAddons]);
     }
     function newAddon(Request $request){
-        try{
-            $this->validate($request,[
-                'image'     =>  'required|mimes:jpeg,png,jpg,gif|max:7000'
-            ]);
-        } catch (ValidationException $error){
-            return response()->json($error->validator->errors());
-        }
-
         //error_log($request->title);
         $newAddon = new \App\Addon;
         $newAddon->image = $request->file('image')->store('uploads');

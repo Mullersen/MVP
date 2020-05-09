@@ -8,20 +8,18 @@ Vue.use(Vuex);
 const appStore = new Vuex.Store({
     state: {
         transportationArray: [],
-        transportation: "",
+        chosenTransportation: "",
         addonArray: [],
         chosenAddons: [],
+        chosenRoute: [],
     },
     mutations: {
-        updateQuote: function(state, data) {
-            state.transportation = data;
+        updateChosenTransportation: function(state, data) {
+            state.chosenTransportation = data;
         },
         updateChosenAddons: function(state, data) {
             state.chosenAddons = data;
         },
-        // updateAddons: fucntion(state, data){
-
-        // }
     },
     actions: {
         //find the methods of transportations stored in the database
@@ -38,8 +36,19 @@ const appStore = new Vuex.Store({
         requestAddons: function(context) {
             axios.get('/getAddons')
                 .then(response => {
-                    console.log(response.data.addons);
+                    //console.log(response.data.addons);
                     context.state.addonArray = response.data.addons;
+                })
+                .catch(error => {
+                    console.log(error.message); // change to error message on screen
+                });
+        },
+        requestRoutes: function(context) {
+            axios.get('/getRoutes')
+                .then(response => {
+                    //set up for when there will be more routes
+                    //console.log(response.data.routes[0].id);
+                    context.state.chosenRoute = response.data.routes;
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen
@@ -50,10 +59,10 @@ const appStore = new Vuex.Store({
                     id: payload,
                 })
                 .then(response => {
-                    console.log(response.data.chosenAddons);
+                    //console.log(response.data.chosenAddons);
                     var chosenActivities = response.data.chosenAddons.map(i => i.activity);
                     console.log(chosenActivities);
-                    context.state.chosenAddons = chosenActivities;
+                    context.state.chosenAddons = response.data.chosenAddons;
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen

@@ -2,15 +2,24 @@
   <div>
     <section id="virtualTrip" class="section is-medium has-background-primary">
       <div class="container">
-        <h1 class="title is-2">The route</h1>
-        <figure class="image is-3by2">
-          <img src="images/routeMap.JPG" alt="The shortest of Inside Canadas routes" />
-        </figure>
+        <div class="columns">
+          <div class="column">
+            <h1 class="title is-2">The route</h1>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <figure class="image is-3by2">
+              <img src="images/routeMap.JPG" alt="The shortest of Inside Canadas routes" />
+            </figure>
+          </div>
+        </div>
         <hr class="hr" />
         <Transport />
         <hr class="hr" />
       </div>
     </section>
+    <!-- cart-slider -->
     <div id="quickviewDefault" class="quickview">
       <header class="quickview-header">
         <p class="title has-text-primary">Quickview your Cart</p>
@@ -31,14 +40,14 @@
 <script>
 import Transport from "./Transport.vue";
 import Cart from "./Cart.vue";
-import Adminroot from "./Adminroot.vue"
+import Adminroot from "./Adminroot.vue";
 
 export default {
   name: "Root",
   components: {
     Transport,
     Cart,
-    Adminroot,
+    Adminroot
   },
   data: function() {
     return {

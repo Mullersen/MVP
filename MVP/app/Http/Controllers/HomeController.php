@@ -30,13 +30,9 @@ class HomeController extends Controller
         return view('welcome' , ['carouselImages' => $images]);
     }
     public function uploadCarouselImage(Request $request){
-        try{
-            $this->validate($request,[
-                'image'     =>  'required|mimes:jpeg,png,jpg,gif|max:7000'
-            ]);
-        } catch (ValidationException $error){
-            return response()->json(["errorMessage" => $error->validator->errors()]);
-        }
+        $validator = $request->validate([
+            'image'     =>  'required|mimes:jpeg,png,jpg,gif|max:7000'
+        ]);
         $newImage = new \App\Carousel;
         $newImage->images = $request->file('image')->store('carousel');
         $newImage->save();

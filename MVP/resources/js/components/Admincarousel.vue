@@ -37,6 +37,11 @@
             </div>
         </div>
     </div>
+    <div id="hidden" class="box">
+        <p id="errorTitle" class="subtitle"></p>
+        <p id="errorText" class="content"></p>
+        <button @click="closeError()">Close</button>
+    </div>
 </div>
 </template>
 
@@ -67,10 +72,13 @@ export default {
                 })
                 .then(response => {
                     console.log(response.data);
-                      this.requestCarouselImages();
+                    this.requestCarouselImages();
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen
+                    document.getElementById('hidden').classList.add('visible');
+                    document.getElementById('errorTitle').innerHTML = 'There is something wrong with the file you are trying to upload';
+                    document.getElementById('errorText').innerHTML ='We accept following files: jpeg, png, jpg, at a maxium size of 7MB';
                 });
         },
         deleteCarouselImage: function(index){
@@ -83,6 +91,8 @@ export default {
                     this.requestCarouselImages();
                 })
                 .catch(error => {
+                    document.getElementById('hidden').classList.add('visible');
+                    document.getElementById('errorTitle').innerHTML = 'Something went wrong while trying to get the images' + error.message;
                     console.log(error.message); // change to error message on screen
                 });
         },
@@ -94,8 +104,13 @@ export default {
 
                 })
                 .catch(error => {
-                    console.log(error.message); // change to error message on screen
+                    document.getElementById('hidden').classList.add('visible');
+                    document.getElementById('errorTitle').innerHTML ='Something went wrong while trying to get the images' + error.message;
+                    console.log(error.message);
                 });
+        },
+        closeError: function(){
+            document.getElementById('hidden').classList.remove('visible');
         }
     },
     mounted(){
@@ -105,5 +120,17 @@ export default {
 </script>
 
 <style>
+#hidden{
+    display:none;
+}
+.visible{
+    display:block !important;
+    position: fixed;
+    width: 50vw;
+    height: 25vh;
+    top: 25vh;
+    left: 25vw;
+    background-color: grey;
+}
 
 </style>
