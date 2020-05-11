@@ -1938,6 +1938,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Addon",
   data: function data() {
@@ -2531,17 +2535,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2558,7 +2551,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.$store.dispatch('requestRoutes');
+    this.$store.dispatch("requestRoutes");
   }
 });
 
@@ -2574,16 +2567,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Addon_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Addon.vue */ "./resources/js/components/Addon.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2645,7 +2628,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.activeAddon {\n  background: grey;\n}\n", ""]);
+exports.push([module.i, "\n.activeAddon {\n  background: grey;\n}\n.equalHeight{\n    display: flex;\n    flex-direction: column;\n    height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -2702,7 +2685,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#welcomeHero {\n  display: none;\n}\n#canadaTitle {\n  font-size: 8rem;\n}\n.carouselImg {\n  height: auto;\n  width: auto;\n  overflow: hidden;\n}\n#virtualTrip {\n  border-bottom: 3px solid #111a2e;\n  padding: 3rem 0 1rem 0;\n  margin-bottom: 2rem;\n}\n.navbar-background {\n  background-color: #111a2e !important;\n}\n@media (max-width: 500px) {\n#heroWrapper {\n    height: 50vh !important;\n    background-image: url(\"/images/Norquay-lookout.JPG\");\n    background-repeat: no-repeat;\n    background-size: cover;\n}\n#canadaTitle {\n    font-size: 3rem;\n}\n#welcomeCarousel {\n    display: none;\n}\n#welcomeHero {\n    display: inline;\n}\n#heroImg {\n    opacity: 0.3;\n}\n}\n", ""]);
+exports.push([module.i, "\n#welcomeHero {\n  display: none;\n}\n#canadaTitle {\n  font-size: 8rem;\n}\n.carouselImg {\n  height: auto;\n  width: auto;\n  overflow: hidden;\n}\n.navbar-background {\n  background-color: #111a2e !important;\n}\n.underlined {\n  text-decoration: underline;\n  -webkit-text-decoration-color: #da6e23;\n          text-decoration-color: #da6e23;\n}\n@media (max-width: 1025px) {\n#heroWrapper {\n    background-image: url(\"/images/Norquay-lookout.JPG\");\n    background-repeat: no-repeat;\n    background-size: cover;\n}\n#canadaTitle {\n    font-size: 3rem;\n}\n#welcomeCarousel {\n    display: none;\n}\n#welcomeHero {\n    display: inline;\n}\n#heroImg {\n    opacity: 0.3;\n}\n#firstImage{\n    display: none;\n}\n}\n", ""]);
 
 // exports
 
@@ -3909,9 +3892,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("hr", { staticClass: "hr" }),
+    _vm._v(" "),
+    _c("h2", { staticClass: "subtitle has-text-centered" }, [
+      _vm._v("These are some activities we think would be great on your trip.")
+    ]),
+    _vm._v(" "),
+    _c("p", { staticClass: "content has-text-centered" }, [
+      _vm._v(" You can choose however many you want. Or none, it's up to you!")
+    ]),
+    _vm._v(" "),
     _c(
       "div",
-      { staticClass: "columns is-multiline" },
+      { staticClass: "columns is-multiline " },
       _vm._l(this.$store.state.addonArray, function(addon, index) {
         return _c(
           "div",
@@ -3924,7 +3917,7 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "card",
+                staticClass: "card equalHeight",
                 attrs: { id: "addon" + index },
                 on: {
                   click: function($event) {
@@ -3957,6 +3950,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "subtitle is-6" }, [
                     _vm._v(_vm._s(addon.price) + " CAD")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "content" }, [
+                    _vm._v(_vm._s(addon.description))
                   ])
                 ])
               ]
@@ -3965,7 +3962,11 @@ var render = function() {
         )
       }),
       0
-    )
+    ),
+    _vm._v(" "),
+    _c("h2", { staticClass: "subtitle has-text-centered" }, [
+      _vm._v("Click on Cart top right corner to see your choices!")
+    ])
   ])
 }
 var staticRenderFns = []
@@ -4595,30 +4596,32 @@ var render = function() {
           "div",
           { staticClass: "container" },
           [
+            _c("div", { staticClass: "columns" }, [
+              _c("div", { staticClass: "column" }, [
+                _c("h1", { staticClass: "title is-2 has-text-centered" }, [
+                  _vm._v("The route")
+                ]),
+                _vm._v(" "),
+                _c("h2", { staticClass: "content has-text-centered" }, [
+                  _vm._v(_vm._s(this.$store.state.chosenRoute[0].locations))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "content has-text-centered" }, [
+                  _vm._v(
+                    "This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!"
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
             _vm._m(0),
             _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _c("hr", { staticClass: "hr" }),
-            _vm._v(" "),
-            _c("Transport"),
-            _vm._v(" "),
-            _c("hr", { staticClass: "hr" })
+            _c("Transport")
           ],
           1
         )
       ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "quickview", attrs: { id: "quickviewDefault" } }, [
-      _vm._m(2),
-      _vm._v(" "),
-      _c("div", { staticClass: "quickview-body" }, [
-        _c("div", { staticClass: "quickview-block" }, [_c("Cart")], 1)
-      ]),
-      _vm._v(" "),
-      _c("footer", { staticClass: "quickview-footer" })
-    ])
+    )
   ])
 }
 var staticRenderFns = [
@@ -4627,16 +4630,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "columns" }, [
-      _c("div", { staticClass: "column" }, [
-        _c("h1", { staticClass: "title is-2" }, [_vm._v("The route")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "columns" }, [
+      _c("div", { staticClass: "column is-1" }),
+      _vm._v(" "),
       _c("div", { staticClass: "column" }, [
         _c("figure", { staticClass: "image is-3by2" }, [
           _c("img", {
@@ -4646,22 +4641,9 @@ var staticRenderFns = [
             }
           })
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "quickview-header" }, [
-      _c("p", { staticClass: "title has-text-primary" }, [
-        _vm._v("Quickview your Cart")
       ]),
       _vm._v(" "),
-      _c("span", {
-        staticClass: "delete",
-        attrs: { "data-dismiss": "quickview" }
-      })
+      _c("div", { staticClass: "column is-1" })
     ])
   }
 ]
@@ -4687,66 +4669,47 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "tile is-ancestor is-vertical" }, [
-      _vm._m(0),
+    _c("div", { staticClass: "columns" }, [
+      _c("div", { staticClass: "column is-1" }),
       _vm._v(" "),
-      _c("div", { staticClass: "columns" }, [
-        _c("div", { staticClass: "column" }, [
-          _c(
+      _c(
+        "div",
+        { staticClass: "column" },
+        _vm._l(this.$store.state.transportationArray, function(
+          transportation,
+          index
+        ) {
+          return _c(
             "div",
-            { staticClass: "tile is-parent" },
-            _vm._l(this.$store.state.transportationArray, function(
-              transportation,
-              index
-            ) {
-              return _c(
-                "div",
-                {
-                  key: transportation.id,
-                  staticClass: "tile is-child box",
-                  on: {
-                    click: function($event) {
-                      return _vm.updateTransportLoadAddons(index)
-                    }
-                  }
-                },
-                [
-                  _c("p", { staticClass: "subtitle" }, [
-                    _vm._v(
-                      "I want to travel by " +
-                        _vm._s(transportation.transport_method)
-                    )
-                  ])
-                ]
-              )
-            }),
-            0
+            {
+              key: transportation.id,
+              staticClass: "box is-transparent",
+              on: {
+                click: function($event) {
+                  return _vm.updateTransportLoadAddons(index)
+                }
+              }
+            },
+            [
+              _c("p", { staticClass: "subtitle has-text-primary" }, [
+                _vm._v(
+                  "I want to travel by " +
+                    _vm._s(transportation.transport_method)
+                )
+              ])
+            ]
           )
-        ])
-      ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "column is-1" })
     ]),
-    _vm._v(" "),
-    _c("hr", { staticClass: "hr" }),
     _vm._v(" "),
     _vm.toggleState == true ? _c("div", [_c("Addon")], 1) : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tile is-12 is-parent" }, [
-      _c("div", { staticClass: "tile is-child box" }, [
-        _c("p", { staticClass: "content has-text-centered" }, [
-          _vm._v(
-            "We have come up with what we think is a really good route for the time you are in Canada. You have a bunch of options to choose from on the route. Along the way we will bring you on a virtual trip. All pictures are clickable, and will show you what your choices will look like on your trip."
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

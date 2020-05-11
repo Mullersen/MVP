@@ -4,14 +4,25 @@
 //import initial Bulma variables
 @import "~bulma/sass/utilities/initial-variables.sass";
 @import "~bulma/sass/utilities/functions.sass";
-$darkBlue: #111A2E;
+$darkBlue: #1B2442;
+$lighterBlue: #2A646D;
 $darkBlue-invert: #fff;
 $lightBlue: #91E0E0;
+$darkOrange: #DA6E23;
 $title-color: $darkBlue-invert;
+$subtitle-color: $darkBlue-invert;
+$button-background-color: $darkOrange;
+$button-color: $darkBlue-invert;
+$button-border-color: $darkOrange;
+$box-background-color: $lightBlue;
+$navbar-item-color: $darkBlue-invert;
+$navbar-item-hover-color: $darkBlue-invert;
+$navbar-item-hover-background-color: $lighterBlue;
 $family-sans-serif: 'Open Sans',
 sans-serif;
 $family-header: 'PT Sans',
 sans-serif;
+$body-color: $grey-lighter;
 $family-primary: $family-sans-serif;
 $family-secondary: $family-header;
 $primary: $darkBlue;

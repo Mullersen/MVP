@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Auth::routes(['/register' => false]);
 
-Route::get('/', 'HomeController@getImages');
+Route::get('/', 'HomeController@getImages')->name('frontpage');
 Route::get('/getTransportation', 'ProductController@getTransportation');
 Route::get('/getRoutes', 'ProductController@getRoutes');
 Route::get('/checkout', function(){
@@ -35,5 +35,7 @@ Route::post('/addons/deleteAddon', 'ProductController@deleteAddon')->middleware(
 Route::post('/carousel/uploadImage', 'HomeController@uploadCarouselImage')->middleware('auth');
 Route::get('/carousel/requestImages', 'HomeController@getCarouselImages')->middleware('auth');
 Route::post('/carousel/deleteImage', 'HomeController@deleteCarouselImage')->middleware('auth');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function(){
+    return view('admin');
+});
 

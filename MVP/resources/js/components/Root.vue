@@ -4,36 +4,25 @@
       <div class="container">
         <div class="columns">
           <div class="column">
-            <h1 class="title is-2">The route</h1>
+            <h1 class="title is-2 has-text-centered">The route</h1>
+            <h2 class="content has-text-centered">{{this.$store.state.chosenRoute[0].locations}}</h2>
+            <p
+            class="content has-text-centered"
+          >This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!</p>
           </div>
         </div>
         <div class="columns">
+          <div class="column is-1"></div>
           <div class="column">
             <figure class="image is-3by2">
               <img src="images/routeMap.JPG" alt="The shortest of Inside Canadas routes" />
             </figure>
           </div>
+          <div class="column is-1"></div>
         </div>
-        <hr class="hr" />
         <Transport />
-        <hr class="hr" />
       </div>
     </section>
-    <!-- cart-slider -->
-    <div id="quickviewDefault" class="quickview">
-      <header class="quickview-header">
-        <p class="title has-text-primary">Quickview your Cart</p>
-        <span class="delete" data-dismiss="quickview"></span>
-      </header>
-
-      <div class="quickview-body">
-        <div class="quickview-block">
-          <Cart />
-        </div>
-      </div>
-
-      <footer class="quickview-footer"></footer>
-    </div>
   </div>
 </template>
 
@@ -54,8 +43,8 @@ export default {
       carouselToggleState: false
     };
   },
-  mounted(){
-      this.$store.dispatch('requestRoutes');
+  mounted() {
+    this.$store.dispatch("requestRoutes");
   }
 };
 </script>
@@ -71,17 +60,15 @@ export default {
   width: auto;
   overflow: hidden;
 }
-#virtualTrip {
-  border-bottom: 3px solid #111a2e;
-  padding: 3rem 0 1rem 0;
-  margin-bottom: 2rem;
-}
 .navbar-background {
   background-color: #111a2e !important;
 }
-@media (max-width: 500px) {
+.underlined {
+  text-decoration: underline;
+  text-decoration-color: #da6e23;
+}
+@media (max-width: 1025px) {
   #heroWrapper {
-    height: 50vh !important;
     background-image: url("/images/Norquay-lookout.JPG");
     background-repeat: no-repeat;
     background-size: cover;
@@ -97,6 +84,9 @@ export default {
   }
   #heroImg {
     opacity: 0.3;
+  }
+  #firstImage{
+    display: none;
   }
 }
 </style>

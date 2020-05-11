@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div class="columns is-multiline">
+    <hr class="hr" />
+    <h2 class="subtitle has-text-centered">These are some activities we think would be great on your trip.</h2>
+    <p class="content has-text-centered"> You can choose however many you want. Or none, it's up to you!</p>
+    <div class="columns is-multiline ">
       <div
         id="cardContainer"
         class="column is-one-quarter"
         v-for="(addon, index) in this.$store.state.addonArray"
         :key="addon.id"
       >
-        <div @click="updateAddons(index)" class="card" :id="'addon' + index">
+        <div @click="updateAddons(index)" class="card equalHeight" :id="'addon' + index">
         <div class="id" style="display:none">{{addon.id}}</div>
           <div class="card-image">
             <figure class="image is-4by3">
@@ -20,11 +23,12 @@
           <div class="card-content">
             <p class="title is-4 has-text-dark">{{addon.activity}}</p>
             <p class="subtitle is-6">{{addon.price}} CAD</p>
-            <!-- <p class="content">{{description}}</p> -->
+            <p class="content">{{addon.description}}</p>
           </div>
         </div>
       </div>
     </div>
+    <h2 class="subtitle has-text-centered">Click on Cart top right corner to see your choices!</h2>
   </div>
 </template>
 
@@ -94,5 +98,10 @@ export default {
 <style>
 .activeAddon {
   background: grey;
+}
+.equalHeight{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 </style>
