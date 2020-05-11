@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <a href="/cart" style="margin-top: 2rem;">
-      <h1 class="title is-3 has-text-primary">Cart</h1>
-    </a>
-
+    <h1 class="title is-3" style="margin-top: 2rem;">
+      <a class="has-text-primary" href="/cart">Cart</a>
+    </h1>
+    <p
+      class="content has-text-primary"
+    >These are the Choices you have made up until now. Press continue to go to payment</p>
     <div class="box">
       <p class="subtitle is-3">The route</p>
       <p id="store" class="content">{{this.$store.state.chosenRoute[0].routename}}</p>
@@ -30,11 +32,13 @@
         </p>
       </div>
     </div>
-    <button class="button" @click="togglePrice = true">Continue</button>
+    <button class="button is-radiusless" @click="togglePrice = true">Continue</button>
     <div v-if="togglePrice == true">
-      <h2 class="subtitle">The final price</h2>
-      <h2 class="subtitle">{{this.finalPrice}} CAD</h2>
-      <a href="/checkout"><button class="button">Checkout</button></a>
+      <h2 class="subtitle has-text-primary">The final price</h2>
+      <h2 class="subtitle has-text-primary">{{this.finalPrice}} CAD</h2>
+      <a href="/checkout">
+        <button class="button is-radiusless">Checkout</button>
+      </a>
     </div>
   </div>
 </template>

@@ -5,11 +5,14 @@
       <div class="column">
         <div
           class="box is-transparent"
+          :id="'transportation' + index"
           @click="updateTransportLoadAddons(index)"
           v-for="(transportation, index) in this.$store.state.transportationArray"
           :key="transportation.id"
         >
-          <p class="subtitle has-text-primary">I want to travel by {{transportation.transport_method}}</p>
+          <p
+            class="subtitle has-text-primary"
+          >I want to travel by {{transportation.transport_method}}</p>
         </div>
       </div>
       <div class="column is-1"></div>
@@ -35,6 +38,15 @@ export default {
   },
   methods: {
     updateTransportLoadAddons: function(index) {
+        var alreadyChosen = document.getElementsByClassName("activeTransportation");
+        if (alreadyChosen.length > 0) {
+            for (var i=0; i <= alreadyChosen.length; i++){
+                alreadyChosen[i].classList.remove("activeTransportation");
+            }
+        }
+        var selectedTransportation = document.getElementById("transportation" + index);
+        selectedTransportation.classList.add("activeTransportation");
+
       this.$store.commit(
         "updateChosenTransportation",
         this.$store.state.transportationArray[index].transport_method
@@ -55,4 +67,7 @@ export default {
 </script>
 
 <style>
+.activeTransportation {
+  background: grey;
+}
 </style>

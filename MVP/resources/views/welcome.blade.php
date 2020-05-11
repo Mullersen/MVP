@@ -72,7 +72,7 @@
                     <div class="column" style="margin-bottom:2rem;">
                         <p class="title is-2 has-text-grey">03</p>
                         <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Book it!</p>
-                        <p class="content">You canbook it right here on the website, or you can contact us. We promise you will not regret it!</p>
+                        <p class="content">You can book it right here on the website, or you can contact us. We promise you will not regret it!</p>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                             </figure>
                         </div>
                         <div class="column">
-                            <p class="content">You probably already know a bit about the Rocky Mountains, which means that the names Lake Louise and Banff most likely ring a bell. That is also true for the thousands if tourists that visit these destinations every day in the high-season. Lucky for you, we have seen it all, and we know the unknown destinations that will take your breath away. The following virtual trip is our best guideline to the Canada trip we want you to experience. If course it is all flexible, and in reality completely up to you whether you want to follow our advice or not.
+                            <p class="content">You probably already know a bit about the Rocky Mountains, which means that the names Lake Louise and Banff most likely ring a bell. That is also true for the thousands of tourists that visit these destinations every day in the high-season. Lucky for you, we have seen it all, and we know the unknown destinations that will take your breath away. The following virtual trip is our best guideline to the Canada trip we want you to experience. If course it is all flexible, and in reality completely up to you whether you want to follow our advice or not.
                             </p>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
             </div>
             </div>
 
-            <footer class="quickview-footer"></footer>
+            <footer class="quickview-footer"><a href="/cart">Go to Cart</a></footer>
         </div>
         <Root/>
     </div>
