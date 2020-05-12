@@ -8,18 +8,21 @@ Vue.use(Vuex);
 const appStore = new Vuex.Store({
     state: {
         transportationArray: [],
-        chosenTransportation: "",
+        chosenTransportation: [],
         addonArray: [],
         chosenAddons: [],
         chosenRoute: [],
     },
     mutations: {
-        updateChosenTransportation: function(state, data) {
-            state.chosenTransportation = data;
-        },
-        updateChosenAddons: function(state, data) {
-            state.chosenAddons = data;
-        },
+        updateRoute: function(state, data) {
+                state.chosenRoute = data;
+            }
+            //     updateChosenTransportation: function(state, data) {
+            //         state.chosenTransportation = data;
+            //     },
+            //     updateChosenAddons: function(state, data) {
+            //         state.chosenAddons = data;
+            //     },
     },
     actions: {
         //find the methods of transportations stored in the database
@@ -47,8 +50,8 @@ const appStore = new Vuex.Store({
             axios.get('/getRoutes')
                 .then(response => {
                     //set up for when there will be more routes
-                    //console.log(response.data.routes[0].id);
-                    context.state.chosenRoute = response.data.routes;
+                    context.commit('updateRoute', response.data.routes)
+                        //context.state.chosenRoute = response.data.routes[0];
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen
@@ -59,10 +62,20 @@ const appStore = new Vuex.Store({
                     id: payload,
                 })
                 .then(response => {
-                    //console.log(response.data.chosenAddons);
-                    var chosenActivities = response.data.chosenAddons.map(i => i.activity);
-                    console.log(chosenActivities);
+                    console.log(response.data.chosenAddons);
                     context.state.chosenAddons = response.data.chosenAddons;
+                })
+                .catch(error => {
+                    console.log(error.message); // change to error message on screen
+                });
+        },
+        getChosenTransportation: function(context, payload) {
+            axios.post('/cart/getTransportation', {
+                    chosenMethod: payload,
+                })
+                .then(response => {
+                    console.log(response.data);
+                    context.state.chosenTransportation = response.data.chosenTransportation;
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen

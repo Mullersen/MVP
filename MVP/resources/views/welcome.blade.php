@@ -125,6 +125,7 @@
         </div>
         <Root/>
     </div>
+    @include('layout.footer')
 @endsection
 
 

@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     updateAddons: function(index) {
+      //visually select the addon when clicked
       var selectedAddon = document.getElementById("addon" + index);
       if (selectedAddon.classList.contains("activeAddon")) {
         selectedAddon.classList.remove("activeAddon");
@@ -55,12 +56,16 @@ export default {
         var allActiveCardsArr = Array.from(allActiveCards);
         var newArr = allActiveCardsArr.map(i => i.firstChild.innerHTML);
         var json_str = JSON.stringify(newArr);
-        document.cookie = "addons=" + json_str + "";
+        document.cookie = "addons=" + json_str;
       } else {
           document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       }
+
+      //update cart with chosen transportation
+         this.$store.dispatch("getChosenAddons", newArr);
     },
     checkIfActive: function(){
+        //check if the addon has already been chosen by the client
         this.$store.state.addonArray.forEach(addonToCheck =>{
             this.cookieAddonArray.forEach(element => {
                 //console.log(element + " " + addonToCheck.id);

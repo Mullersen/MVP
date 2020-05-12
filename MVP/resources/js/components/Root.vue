@@ -5,7 +5,7 @@
         <div class="columns">
           <div class="column">
             <h1 class="title is-2 has-text-centered">The route</h1>
-            <h2 class="content has-text-centered">{{this.$store.state.chosenRoute[0].locations}}</h2>
+            <h2 v-if="this.$store.state.chosenRoute.length == 1" class="content has-text-centered">{{this.$store.state.chosenRoute[0].locations}}</h2>
             <p
             class="content has-text-centered"
           >This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!</p>
@@ -43,7 +43,7 @@ export default {
       carouselToggleState: false
     };
   },
-  mounted() {
+  beforeMount() {
     this.$store.dispatch("requestRoutes");
   }
 };

@@ -18,6 +18,11 @@ $box-background-color: $lightBlue;
 $navbar-item-color: $darkBlue-invert;
 $navbar-item-hover-color: $darkBlue-invert;
 $navbar-item-hover-background-color: $lighterBlue;
+.navbar-menu.is-active {
+    display: block;
+    background-color: #111a2e;
+}
+
 $footer-background-color: #111a2e;
 $family-sans-serif: 'Open Sans',
 sans-serif;

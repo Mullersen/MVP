@@ -38,6 +38,7 @@ export default {
   },
   methods: {
     updateTransportLoadAddons: function(index) {
+        //visually select the chosen method of transportation
         var alreadyChosen = document.getElementsByClassName("activeTransportation");
         if (alreadyChosen.length > 0) {
             for (var i=0; i <= alreadyChosen.length; i++){
@@ -47,16 +48,15 @@ export default {
         var selectedTransportation = document.getElementById("transportation" + index);
         selectedTransportation.classList.add("activeTransportation");
 
-      this.$store.commit(
-        "updateChosenTransportation",
-        this.$store.state.transportationArray[index].transport_method
-      );
+        //make cookie with chosen transportation
       document.cookie =
         "transport=" +
         this.$store.state.transportationArray[index].transport_method;
-      this.toggleState = true;
 
-      document.cookie = "route=" + this.$store.state.chosenRoute;
+        //update cart with chosen transportation
+         this.$store.dispatch("getChosenTransportation", this.$store.state.transportationArray[index].transport_method);
+
+      this.toggleState = true;
     }
   },
   mounted() {

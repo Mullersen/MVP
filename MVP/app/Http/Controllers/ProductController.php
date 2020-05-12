@@ -23,6 +23,10 @@ class ProductController extends Controller
         $chosenAddons = \App\Addon::whereIn('id', $request->id)->get();
         return response()->json(['chosenAddons' => $chosenAddons]);
     }
+    function getCartTransportation(Request $request){
+        $chosenTransportation = \App\Transportation::where('transport_method', '=', $request->chosenMethod)->get();
+        return response()->json(['chosenTransportation' => $chosenTransportation]);
+    }
     function newAddon(Request $request){
         //error_log($request->title);
         $newAddon = new \App\Addon;

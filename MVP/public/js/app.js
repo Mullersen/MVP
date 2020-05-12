@@ -1951,6 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateAddons: function updateAddons(index) {
+      //visually select the addon when clicked
       var selectedAddon = document.getElementById("addon" + index);
 
       if (selectedAddon.classList.contains("activeAddon")) {
@@ -1968,14 +1969,18 @@ __webpack_require__.r(__webpack_exports__);
           return i.firstChild.innerHTML;
         });
         var json_str = JSON.stringify(newArr);
-        document.cookie = "addons=" + json_str + "";
+        document.cookie = "addons=" + json_str;
       } else {
         document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
-      }
+      } //update cart with chosen transportation
+
+
+      this.$store.dispatch("getChosenAddons", newArr);
     },
     checkIfActive: function checkIfActive() {
       var _this = this;
 
+      //check if the addon has already been chosen by the client
       this.$store.state.addonArray.forEach(function (addonToCheck) {
         _this.cookieAddonArray.forEach(function (element) {
           //console.log(element + " " + addonToCheck.id);
@@ -2425,6 +2430,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2437,6 +2446,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
     };
   },
   methods: {
+    clearCookies: function clearCookies() {
+      document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
+      document.cookie = "transport=; expires=Thu 01 Jan 1990 00:00:00 UTC";
+      this.updateCartChoices();
+    },
     sumPrices: function sumPrices() {
       var _this = this;
 
@@ -2459,14 +2473,19 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       }, 4000);
     },
     updateCartChoices: function updateCartChoices() {
-      var _this2 = this;
+      //load the addons based on the cookie
+      if (this.getCookie("addons")) {
+        var payload = JSON.parse(this.getCookie("addons"));
+        this.$store.dispatch("getChosenAddons", payload);
+      } //load the transportation based on the cookie
 
-      setInterval(function () {
-        var payload = JSON.parse(_this2.getCookie("addons"));
 
-        _this2.$store.dispatch("getChosenAddons", payload);
-      }, 2000);
-      this.$store.dispatch("requestTransportation");
+      if (this.getCookie("transport")) {
+        var payload = this.getCookie("transport");
+        this.$store.dispatch("getChosenTransportation", payload);
+      } //there is only one route, so just request the route from DB
+
+
       this.$store.dispatch("requestRoutes");
     },
     getCookie: function getCookie(param) {
@@ -2489,10 +2508,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       return "";
     }
   },
-  beforeMount: function beforeMount() {
-    this.updateCartChoices();
-  },
   mounted: function mounted() {
+    this.updateCartChoices();
     this.sumPrices();
   }
 });
@@ -2554,7 +2571,7 @@ __webpack_require__.r(__webpack_exports__);
       carouselToggleState: false
     };
   },
-  mounted: function mounted() {
+  beforeMount: function beforeMount() {
     this.$store.dispatch("requestRoutes");
   }
 });
@@ -2609,6 +2626,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateTransportLoadAddons: function updateTransportLoadAddons(index) {
+      //visually select the chosen method of transportation
       var alreadyChosen = document.getElementsByClassName("activeTransportation");
 
       if (alreadyChosen.length > 0) {
@@ -2618,11 +2636,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var selectedTransportation = document.getElementById("transportation" + index);
-      selectedTransportation.classList.add("activeTransportation");
-      this.$store.commit("updateChosenTransportation", this.$store.state.transportationArray[index].transport_method);
-      document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method;
+      selectedTransportation.classList.add("activeTransportation"); //make cookie with chosen transportation
+
+      document.cookie = "transport=" + this.$store.state.transportationArray[index].transport_method; //update cart with chosen transportation
+
+      this.$store.dispatch("getChosenTransportation", this.$store.state.transportationArray[index].transport_method);
       this.toggleState = true;
-      document.cookie = "route=" + this.$store.state.chosenRoute;
     }
   },
   mounted: function mounted() {
@@ -4521,6 +4540,20 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _vm._m(0),
     _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "button is-radiusless",
+        staticStyle: {
+          float: "right",
+          "margin-top": "2rem",
+          display: "inline-block"
+        },
+        on: { click: _vm.clearCookies }
+      },
+      [_vm._v("Clear Cart")]
+    ),
+    _vm._v(" "),
     _c("p", { staticClass: "content has-text-primary" }, [
       _vm._v(
         "These are the Choices you have made up until now. Press continue to go to payment"
@@ -4530,17 +4563,21 @@ var render = function() {
     _c("div", { staticClass: "box" }, [
       _c("p", { staticClass: "subtitle is-3" }, [_vm._v("The route")]),
       _vm._v(" "),
-      _c("p", { staticClass: "content", attrs: { id: "store" } }, [
-        _vm._v(_vm._s(this.$store.state.chosenRoute[0].routename))
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "content" }, [
-        _vm._v(_vm._s(this.$store.state.chosenRoute[0].locations))
-      ]),
-      _vm._v(" "),
-      _c("h4", { staticClass: "content" }, [
-        _vm._v(_vm._s(this.$store.state.chosenRoute[0].price) + " CAD")
-      ])
+      this.$store.state.chosenRoute.length == 1
+        ? _c("div", [
+            _c("p", { staticClass: "content" }, [
+              _vm._v(_vm._s(this.$store.state.chosenRoute[0].routename))
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "content" }, [
+              _vm._v(_vm._s(this.$store.state.chosenRoute[0].locations))
+            ]),
+            _vm._v(" "),
+            _c("h4", { staticClass: "content" }, [
+              _vm._v(_vm._s(this.$store.state.chosenRoute[0].price) + " CAD")
+            ])
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c(
@@ -4551,18 +4588,14 @@ var render = function() {
           _vm._v("Chosen method of transportation")
         ]),
         _vm._v(" "),
-        _vm._l(this.$store.state.transportationArray, function(transportation) {
+        _vm._l(this.$store.state.chosenTransportation, function(
+          transportation
+        ) {
           return _c("div", { key: transportation.id }, [
-            transportation.transport_method == _vm.getCookie("transport")
-              ? _c("p", [
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(transportation.transport_method) +
-                      "\n        "
-                  ),
-                  _c("span", [_vm._v(_vm._s(transportation.price) + " CAD")])
-                ])
-              : _vm._e()
+            _vm._v(
+              "\n      " + _vm._s(transportation.transport_method) + "\n      "
+            ),
+            _c("span", [_vm._v(_vm._s(transportation.price) + " CAD")])
           ])
         })
       ],
@@ -4589,6 +4622,7 @@ var render = function() {
       "button",
       {
         staticClass: "button is-radiusless",
+        staticStyle: { "margin-bottom": "2rem" },
         on: {
           click: function($event) {
             _vm.togglePrice = true
@@ -4620,7 +4654,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "h1",
-      { staticClass: "title is-3", staticStyle: { "margin-top": "2rem" } },
+      {
+        staticClass: "title is-3",
+        staticStyle: { "margin-top": "2rem", display: "inline-block" }
+      },
       [
         _c("a", { staticClass: "has-text-primary", attrs: { href: "/cart" } }, [
           _vm._v("Cart")
@@ -4633,9 +4670,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("a", { attrs: { href: "/checkout" } }, [
-      _c("button", { staticClass: "button is-radiusless" }, [
-        _vm._v("Checkout")
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "button is-radiusless",
+          staticStyle: { "margin-bottom": "2rem" }
+        },
+        [_vm._v("Checkout")]
+      )
     ])
   }
 ]
@@ -4678,9 +4720,11 @@ var render = function() {
                   _vm._v("The route")
                 ]),
                 _vm._v(" "),
-                _c("h2", { staticClass: "content has-text-centered" }, [
-                  _vm._v(_vm._s(this.$store.state.chosenRoute[0].locations))
-                ]),
+                this.$store.state.chosenRoute.length == 1
+                  ? _c("h2", { staticClass: "content has-text-centered" }, [
+                      _vm._v(_vm._s(this.$store.state.chosenRoute[0].locations))
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("p", { staticClass: "content has-text-centered" }, [
                   _vm._v(
@@ -18028,18 +18072,21 @@ Vue.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
     transportationArray: [],
-    chosenTransportation: "",
+    chosenTransportation: [],
     addonArray: [],
     chosenAddons: [],
     chosenRoute: []
   },
   mutations: {
-    updateChosenTransportation: function updateChosenTransportation(state, data) {
-      state.chosenTransportation = data;
-    },
-    updateChosenAddons: function updateChosenAddons(state, data) {
-      state.chosenAddons = data;
-    }
+    updateRoute: function updateRoute(state, data) {
+      state.chosenRoute = data;
+    } //     updateChosenTransportation: function(state, data) {
+    //         state.chosenTransportation = data;
+    //     },
+    //     updateChosenAddons: function(state, data) {
+    //         state.chosenAddons = data;
+    //     },
+
   },
   actions: {
     //find the methods of transportations stored in the database
@@ -18062,8 +18109,7 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     requestRoutes: function requestRoutes(context) {
       axios.get('/getRoutes').then(function (response) {
         //set up for when there will be more routes
-        //console.log(response.data.routes[0].id);
-        context.state.chosenRoute = response.data.routes;
+        context.commit('updateRoute', response.data.routes); //context.state.chosenRoute = response.data.routes[0];
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
@@ -18072,12 +18118,18 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       axios.post('/cart/getAddons', {
         id: payload
       }).then(function (response) {
-        //console.log(response.data.chosenAddons);
-        var chosenActivities = response.data.chosenAddons.map(function (i) {
-          return i.activity;
-        });
-        console.log(chosenActivities);
+        console.log(response.data.chosenAddons);
         context.state.chosenAddons = response.data.chosenAddons;
+      })["catch"](function (error) {
+        console.log(error.message); // change to error message on screen
+      });
+    },
+    getChosenTransportation: function getChosenTransportation(context, payload) {
+      axios.post('/cart/getTransportation', {
+        chosenMethod: payload
+      }).then(function (response) {
+        console.log(response.data);
+        context.state.chosenTransportation = response.data.chosenTransportation;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });

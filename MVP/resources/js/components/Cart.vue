@@ -1,25 +1,29 @@
 <template>
   <div class="container">
-    <h1 class="title is-3" style="margin-top: 2rem;">
+    <h1 class="title is-3" style="margin-top: 2rem; display:inline-block;">
       <a class="has-text-primary" href="/cart">Cart</a>
     </h1>
+    <button style="float:right; margin-top: 2rem;display:inline-block;" class="button is-radiusless" @click="clearCookies">Clear Cart</button>
     <p
       class="content has-text-primary"
     >These are the Choices you have made up until now. Press continue to go to payment</p>
     <div class="box">
       <p class="subtitle is-3">The route</p>
-      <p id="store" class="content">{{this.$store.state.chosenRoute[0].routename}}</p>
-      <p class="content">{{this.$store.state.chosenRoute[0].locations}}</p>
-      <h4 class="content">{{this.$store.state.chosenRoute[0].price}} CAD</h4>
+      <div v-if="this.$store.state.chosenRoute.length == 1">
+        <p class="content">{{this.$store.state.chosenRoute[0].routename}}</p>
+        <p class="content">{{this.$store.state.chosenRoute[0].locations}}</p>
+        <h4 class="content">{{this.$store.state.chosenRoute[0].price}} CAD</h4>
+      </div>
     </div>
 
     <div class="box">
       <p class="subtitle is-3">Chosen method of transportation</p>
-      <div v-for="transportation in this.$store.state.transportationArray" :key="transportation.id">
-        <p v-if="transportation.transport_method == getCookie('transport')">
-          {{transportation.transport_method}}
-          <span>{{transportation.price}} CAD</span>
-        </p>
+      <div
+        v-for="transportation in this.$store.state.chosenTransportation"
+        :key="transportation.id"
+      >
+        {{transportation.transport_method}}
+        <span>{{transportation.price}} CAD</span>
       </div>
     </div>
 
@@ -32,12 +36,12 @@
         </p>
       </div>
     </div>
-    <button class="button is-radiusless" @click="togglePrice = true">Continue</button>
+    <button class="button is-radiusless" style="margin-bottom:2rem;" @click="togglePrice = true">Continue</button>
     <div v-if="togglePrice == true">
       <h2 class="subtitle has-text-primary">The final price</h2>
       <h2 class="subtitle has-text-primary">{{this.finalPrice}} CAD</h2>
       <a href="/checkout">
-        <button class="button is-radiusless">Checkout</button>
+        <button class="button is-radiusless" style="margin-bottom:2rem;">Checkout</button>
       </a>
     </div>
   </div>
@@ -56,6 +60,11 @@ export default {
     };
   },
   methods: {
+    clearCookies: function() {
+      document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
+      document.cookie = "transport=; expires=Thu 01 Jan 1990 00:00:00 UTC";
+      this.updateCartChoices()
+    },
     sumPrices: function() {
       setTimeout(() => {
         this.$store.state.transportationArray.forEach(element => {
@@ -71,11 +80,18 @@ export default {
       }, 4000);
     },
     updateCartChoices: function() {
-      setInterval(() => {
+      //load the addons based on the cookie
+      if (this.getCookie("addons")) {
         var payload = JSON.parse(this.getCookie("addons"));
         this.$store.dispatch("getChosenAddons", payload);
-      }, 2000);
-      this.$store.dispatch("requestTransportation");
+      }
+
+      //load the transportation based on the cookie
+      if (this.getCookie("transport")) {
+        var payload = this.getCookie("transport");
+        this.$store.dispatch("getChosenTransportation", payload);
+      }
+      //there is only one route, so just request the route from DB
       this.$store.dispatch("requestRoutes");
     },
     getCookie: function(param) {
@@ -94,10 +110,8 @@ export default {
       return "";
     }
   },
-  beforeMount() {
-    this.updateCartChoices();
-  },
   mounted() {
+    this.updateCartChoices();
     this.sumPrices();
   }
 };

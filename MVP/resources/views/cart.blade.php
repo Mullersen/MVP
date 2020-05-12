@@ -4,4 +4,6 @@
     <div id="app">
         <Cart/>
     </div>
+    @include('layout.footer')
 @endsection
+

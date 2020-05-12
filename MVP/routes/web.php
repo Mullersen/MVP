@@ -26,6 +26,7 @@ Route::get('/cart', function(){
     return view('cart');
 });
 Route::post('/cart/getAddons', 'ProductController@getCartAddons');
+Route::post('/cart/getTransportation', 'ProductController@getCartTransportation');
 
 Route::get('/getAddons', 'ProductController@getAddons');
 
