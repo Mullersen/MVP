@@ -13,7 +13,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //this demanded all routes that went through the home controller "must be authorized."
+        // $this->middleware('auth');
     }
 
     /**

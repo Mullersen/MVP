@@ -12,10 +12,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+$proxy_url    = getenv('PROXY_URL');
+$proxy_schema = getenv('PROXY_SCHEMA');
+
+if (!empty($proxy_url)) {
+   URL::forceRootUrl($proxy_url);
+}
+
+if (!empty($proxy_schema)) {
+   URL::forceScheme($proxy_schema);
+}
+
 Auth::routes();
 Auth::routes(['/register' => false]);
 
-Route::get('/', 'HomeController@getImages')->name('frontpage');
+Route::get('/', 'HomeController@getImages');
 Route::get('/getTransportation', 'ProductController@getTransportation');
 Route::get('/getRoutes', 'ProductController@getRoutes');
 Route::get('/checkout', function(){
