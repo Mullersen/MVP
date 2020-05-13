@@ -10,7 +10,7 @@
         v-for="(addon, index) in this.$store.state.addonArray"
         :key="addon.id"
       >
-        <div @click="updateAddons(index)" class="card equalHeight" :id="'addon' + index">
+        <div @click="updateAddons(index)" class="card equalHeight is-clickable" :id="'addon' + index">
         <div class="id" style="display:none">{{addon.id}}</div>
           <div class="card-image">
             <figure class="image is-4by3">

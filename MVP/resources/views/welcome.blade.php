@@ -46,7 +46,7 @@
                 <div class="column is-1"></div>
                 <div id="firstImage" class="column is-4">
                     <figure class="image is-3by4">
-                        <img src="images/DSC00170.JPG" alt="The route through the canadian rockies">
+                        <img src="images/ice.JPG" alt="The route through the canadian rockies">
                     </figure>
                 </div>
                 <div class="column is-6">
@@ -89,7 +89,7 @@
                     <div class="columns">
                         <div class="column">
                             <figure class="image is-square">
-                                <img src="images/DSC00170.JPG" alt="">
+                                <img src="images/kananaskis.png" alt="">
                             </figure>
                         </div>
                         <div class="column">

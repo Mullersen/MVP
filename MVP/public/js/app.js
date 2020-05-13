@@ -4002,7 +4002,7 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "card equalHeight",
+                staticClass: "card equalHeight is-clickable",
                 attrs: { id: "addon" + index },
                 on: {
                   click: function($event) {
@@ -4803,7 +4803,7 @@ var render = function() {
             "div",
             {
               key: transportation.id,
-              staticClass: "box is-transparent",
+              staticClass: "box is-transparent is-clickable",
               attrs: { id: "transportation" + index },
               on: {
                 click: function($event) {

@@ -5,6 +5,10 @@
   background-color: #111a2e;
 }
 
+.is-clickable {
+  cursor: pointer;
+}
+
 /*! bulma.io v0.8.2 | MIT License | github.com/jgthms/bulma */
 
 @-webkit-keyframes spinAround {

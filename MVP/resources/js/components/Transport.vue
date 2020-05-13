@@ -4,7 +4,7 @@
       <div class="column is-1"></div>
       <div class="column">
         <div
-          class="box is-transparent"
+          class="box is-transparent is-clickable"
           :id="'transportation' + index"
           @click="updateTransportLoadAddons(index)"
           v-for="(transportation, index) in this.$store.state.transportationArray"
