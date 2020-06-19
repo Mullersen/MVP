@@ -40,70 +40,49 @@
             </div>
         </div>
     </section>
-    <section class="section is-medium has-background-primary">
+    <section class="section is-small has-background-primary">
         <div class="container">
             <div class="columns">
-                <div class="column is-1"></div>
-                <div id="firstImage" class="column is-4">
-                    <figure class="image is-3by4">
-                        <img src="images/ice.JPG" alt="The route through the canadian rockies">
-                    </figure>
-                </div>
-                <div class="column is-6">
+                <div class="column is-8 is-offset-2 has-text-centered">
                     <h1 class="title is-2 underlined">Feel the beauty of Canada</h1>
                     <p class="content">We at Inside Canada have fallen hopelessly for the uncut nature experiences Canada can offer visitiors and local alike. We exist with the single purpose of showing you why, and because we live here we know how to guide you to the most beautiful turquiose lakes and untouched snowpeaks in the mountains. Scroll down to see why we are so passionate about our second home!</p>
                     <button class="button is-radiusless">Let's take you here</button>
-                </div>
-                <div class="column is-1"></div>
-            </div>
-            <h2 class="title is-2 has-text-centered" style="margin-top:6rem;">The process</h2>
-            <div class="columns is-8">
-                <div class="column is-half is-offset-one-quarter">
-                    <div class="column" style="margin-bottom:2rem;">
-                        <p class="title is-2 has-text-grey">01</p>
-                        <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Get Inspiration</p>
-                        <p class="content">Imagine a trip to Canada with us. We have carefully chosen a route based on our own experiences, so you are free to follow it, or do your own thing. See it below.</p>
-                    </div>
-                    <div class="column" style="margin-bottom:2rem;">
-                        <p class="title is-2 has-text-grey">02</p>
-                        <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Contact us</p>
-                        <p class="content">Promise we don't bite. If you have any questions, or would like to implement your own destination but don't now how, you are always free to contect us!</p>
-                    </div>
-                    <div class="column" style="margin-bottom:2rem;">
-                        <p class="title is-2 has-text-grey">03</p>
-                        <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Book it!</p>
-                        <p class="content">You can book it right here on the website, or you can contact us. We promise you will not regret it!</p>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
     <section class="section is-medium has-background-primary">
         <div class="container">
+            <h2 class="title is-2 has-text-centered" style="margin-top:6rem;">The process</h2>
             <div class="columns">
-                <div class="column is-1"></div>
-                <div class="column is-6">
-                    <div class="columns has-text-centered">
-                        <p class="title is-2 underlined" style=" margin: 7rem 0 2rem 0; padding: 0.75rem;"><span class="title is-2 has-text-grey">01</span>   The Virtual Trip</p>
-                    </div>
+                <div class="column is-8 is-offset-2">
                     <div class="columns">
-                        <div class="column">
-                            <figure class="image is-square">
-                                <img src="images/kananaskis.png" alt="">
-                            </figure>
+                        <div class="column" >
+                            <p class="title is-2 has-text-grey">01</p>
+                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Get Inspired</p>
+                            <p class="content">Scroll down and imagine a trip to Canada with us. We have carefully chosen a the best route based on our own experiences, but you are free to follow it, or do your own thing</p>
                         </div>
-                        <div class="column">
-                            <p class="content">You probably already know a bit about the Rocky Mountains, which means that the names Lake Louise and Banff most likely ring a bell. That is also true for the thousands of tourists that visit these destinations every day in the high-season. Lucky for you, we have seen it all, and we know the unknown destinations that will take your breath away. The following virtual trip is our best guideline to the Canada trip we want you to experience. If course it is all flexible, and in reality completely up to you whether you want to follow our advice or not.
-                            </p>
+                        <div class="column" id="process2">
+                            <p class="title is-2 has-text-grey">02</p>
+                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Customize the trip</p>
+                            <p class="content">Always dreamt of trying outdoors rock-climbing? You can add it as an activity to your trip right here on the site and we will take care of the details for you.</p>
+                        </div>
+                        <div class="column" id="process3">
+                            <p class="title is-2 has-text-grey">03</p>
+                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Live your dream</p>
+                            <p class="content">Book the trip of your dreams right here, or if you have any questions or want to add your own destination you can contact us. We promise you will not regret it!</p>
                         </div>
                     </div>
                 </div>
-                <div class="column is-4">
-                    <figure class="image is-4by5">
-                        <img src="images/DSC00170.JPG" alt="The route through the canadian rockies">
-                    </figure>
+            </div>
+        </div>
+    </section>
+    <section class="section is-small has-background-primary">
+        <div class="container">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <p class="title is-2 underlined" style=" margin: 7rem 0 2rem 0; padding: 0.75rem;">Dream away with us</p>
                 </div>
-                <div class="column is-1"></div>
             </div>
         </div>
     </section>
@@ -111,18 +90,17 @@
         <!-- cart-slider -->
         <div id="quickviewDefault" class="quickview">
             <header class="quickview-header">
-            <p class="title has-text-primary">Quickview your Cart</p>
-            <span class="delete" data-dismiss="quickview"></span>
+                <p class="title has-text-primary">Quickview your Cart</p>
+                <span class="delete" data-dismiss="quickview"></span>
             </header>
-
             <div class="quickview-body">
-            <div class="quickview-block">
-             <Cart />
+                <div class="quickview-block">
+                    <Cart />
+                </div>
             </div>
-            </div>
-
             <footer class="quickview-footer"><a href="/cart">Go to Cart</a></footer>
         </div>
+        {{-- virtual trip component start --}}
         <Root/>
     </div>
     @include('layout.footer')

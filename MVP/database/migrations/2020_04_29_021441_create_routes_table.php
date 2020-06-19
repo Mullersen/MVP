@@ -17,7 +17,6 @@ class CreateRoutesTable extends Migration
             $table->id();
             $table->string('routename');
             $table->mediumInteger('price');
-            $table->string('locations');
             $table->timestamps();
         });
     }

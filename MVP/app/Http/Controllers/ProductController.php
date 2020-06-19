@@ -19,6 +19,10 @@ class ProductController extends Controller
         $routes = \App\Route::all();
         return response()->json(['routes' => $routes]);
     }
+    function getLocationTags(){
+        $tags = \App\Route::allTags()->get();
+        return response()->json(['tags' => $tags]);
+    }
     function getCartAddons(Request $request){
         $chosenAddons = \App\Addon::whereIn('id', $request->id)->get();
         return response()->json(['chosenAddons' => $chosenAddons]);
@@ -27,6 +31,17 @@ class ProductController extends Controller
         $chosenTransportation = \App\Transportation::where('transport_method', '=', $request->chosenMethod)->get();
         return response()->json(['chosenTransportation' => $chosenTransportation]);
     }
+    function newTrip(Request $request){
+        $newTrip = new \App\Route;
+        $newTrip->routename = "rockies";
+        $newTrip->price = 200;
+
+        //$newRoute->tag($request->tags);
+
+        $newTrip->save();
+        return response()->json(['success' => 'newroute']);
+    }
+    }
     function newAddon(Request $request){
         //error_log($request->title);
         $newAddon = new \App\Addon;
@@ -34,7 +49,9 @@ class ProductController extends Controller
         $newAddon->activity = $request->title;
         $newAddon->description = $request->description;
         $newAddon->price = $request->price;
-        $newAddon->location = $request->location;
+
+        //$newAddon->tag($request->tags);
+
         $newAddon->save();
 
         return response()->json(['success' => 'good']);

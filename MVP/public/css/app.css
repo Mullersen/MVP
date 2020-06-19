@@ -9,6 +9,14 @@
   cursor: pointer;
 }
 
+#process2 {
+  padding-top: 80px;
+}
+
+#process3 {
+  padding-top: 160px;
+}
+
 /*! bulma.io v0.8.2 | MIT License | github.com/jgthms/bulma */
 
 @-webkit-keyframes spinAround {

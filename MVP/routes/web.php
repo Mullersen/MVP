@@ -43,12 +43,14 @@ Route::post('/cart/getTransportation', 'ProductController@getCartTransportation'
 Route::get('/getAddons', 'ProductController@getAddons');
 
 //Admin routes
+Route::get('locations/getLocationTags', 'ProductController@getLocationTags');
 Route::post('/addons/uploadAddon', 'ProductController@newAddon')->middleware('auth');
 Route::post('/addons/deleteAddon', 'ProductController@deleteAddon')->middleware('auth');
 Route::post('/carousel/uploadImage', 'HomeController@uploadCarouselImage')->middleware('auth');
 Route::get('/carousel/requestImages', 'HomeController@getCarouselImages')->middleware('auth');
 Route::post('/carousel/deleteImage', 'HomeController@deleteCarouselImage')->middleware('auth');
-Route::get('/home', function(){
+Route::post('/trip/uploadTrip', 'ProductController@newTrip')->middleware('auth');
+Route::get('/admin', function(){
     return view('admin');
-});
+})->middleware('auth');
 

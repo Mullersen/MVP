@@ -4,6 +4,7 @@
 //import initial Bulma variables
 @import "~bulma/sass/utilities/initial-variables.sass";
 @import "~bulma/sass/utilities/functions.sass";
+//define own variables for Bulma
 $darkBlue: #1B2442;
 $lighterBlue: #2A646D;
 $darkBlue-invert: #fff;
@@ -38,5 +39,7 @@ $family-secondary: $family-header;
 $primary: $darkBlue;
 $light: $lightBlue;
 $card-background-color: $lightBlue;
+//import other scss files
+@import './frontpage.scss';
 // import the rest of Bulma
 @import '~bulma/bulma.sass';

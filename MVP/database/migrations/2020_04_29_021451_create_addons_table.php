@@ -19,7 +19,6 @@ class CreateAddonsTable extends Migration
             $table->string('description');
             $table->string('image');
             $table->smallInteger('price');
-            $table->string('location');
             $table->timestamps();
         });
     }

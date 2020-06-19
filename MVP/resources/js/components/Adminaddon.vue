@@ -26,12 +26,7 @@
                 <input class="input" v-model="NewAddonPrice" type="text" placeholder="Price">
             </div>
         </div>
-        <div class="field">
-            <label class="label">Locations</label>
-            <div class="control">
-                <input class="input" v-model="NewAddonLocations" type="text" placeholder="Locations, separated by a space">
-            </div>
-        </div>
+        <!-- <LocationTag/> -->
         <div class="field">
             <div class="control">
                 <button class="button" @click="uploadAddon">Submit</button>
@@ -74,14 +69,18 @@
 
 <script>
 const axios = require('axios');
+//import LocationTag from './LocationTag.vue';
+
 export default {
     name: "Adminaddon",
+    // components: {
+    //     LocationTag
+    // },
     data: function(){
         return{
             NewAddonTitle: "",
             NewAddonDescription: "",
             NewAddonPrice: "",
-            NewAddonLocations: "",
             file: "",
             id: "",
         }
@@ -97,7 +96,8 @@ export default {
             formData.append('title', this.NewAddonTitle);
             formData.append('description', this.NewAddonDescription);
             formData.append('price', this.NewAddonPrice);
-            formData.append('location', this.NewAddonLocations);
+            //formData.append('location', this.NewAddonLocations);
+            //formData.append('tags', this.$store.state.locationTags);
 
             axios.post('/addons/uploadAddon', formData, {
                 headers: {

@@ -3,24 +3,22 @@
     <section id="virtualTrip" class="section is-medium has-background-primary">
       <div class="container">
         <div class="columns">
-          <div class="column">
+          <div class="column is-3">
             <h1 class="title is-2 has-text-centered">The route</h1>
-            <h2 v-if="this.$store.state.chosenRoute.length == 1" class="content has-text-centered">{{this.$store.state.chosenRoute[0].locations}}</h2>
+            <!-- <div class="content">
+                <ol type="1" v-if="this.$store.state.chosenRoute.length == 1">
+                    <li v-for="(routeDestinations, index) in this.$store.state.chosenRoute" :key="index" >{{routeDestinations.locations}}</li>
+                </ol>
+            </div> -->
             <p
             class="content has-text-centered"
           >This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!</p>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column is-1"></div>
-          <div class="column">
-            <figure class="image is-3by2">
+          <div class="column is-9">
               <img src="images/routeMap.JPG" alt="The shortest of Inside Canadas routes" />
-            </figure>
           </div>
-          <div class="column is-1"></div>
         </div>
-        <Transport />
+        <Transport/>
       </div>
     </section>
   </div>
