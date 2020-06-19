@@ -2447,9 +2447,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
   methods: {
     uploadRoute: function uploadRoute() {
       console.log("upload route entered");
-      axios.post('/trip/uploadTrip', {
-        title: this.NewRouteTitle,
-        price: this.NewRoutePrice
+      var formData = new FormData();
+      formData.append('title', this.NewRouteTitle);
+      formData.append('price', this.NewRoutePrice);
+      formData.append('tags', this.$store.state.locationTags);
+      axios.post('/trip/uploadTrip', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
       }).then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
@@ -4693,75 +4699,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "box" }, [
-    _c("p", { staticClass: "subtitle" }, [_vm._v("Create new route")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Routename")]),
+  return _c(
+    "div",
+    { staticClass: "box" },
+    [
+      _c("p", { staticClass: "subtitle" }, [_vm._v("Create new route")]),
       _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewRouteTitle,
-              expression: "NewRouteTitle"
-            }
-          ],
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Title" },
-          domProps: { value: _vm.NewRouteTitle },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Routename")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewRouteTitle,
+                expression: "NewRouteTitle"
               }
-              _vm.NewRouteTitle = $event.target.value
+            ],
+            staticClass: "input",
+            attrs: { type: "text", placeholder: "Title" },
+            domProps: { value: _vm.NewRouteTitle },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewRouteTitle = $event.target.value
+              }
             }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Price")]),
+          })
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.NewRoutePrice,
-              expression: "NewRoutePrice"
-            }
-          ],
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Price" },
-          domProps: { value: _vm.NewRoutePrice },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "field" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Price")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.NewRoutePrice,
+                expression: "NewRoutePrice"
               }
-              _vm.NewRoutePrice = $event.target.value
+            ],
+            staticClass: "input",
+            attrs: { type: "text", placeholder: "Price" },
+            domProps: { value: _vm.NewRoutePrice },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.NewRoutePrice = $event.target.value
+              }
             }
-          }
-        })
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("LocationTag"),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _c("div", { staticClass: "control" }, [
+          _c(
+            "button",
+            { staticClass: "button", on: { click: _vm.uploadRoute } },
+            [_vm._v("Submit")]
+          )
+        ])
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control" }, [
-        _c(
-          "button",
-          { staticClass: "button", on: { click: _vm.uploadRoute } },
-          [_vm._v("Submit")]
-        )
-      ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

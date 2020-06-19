@@ -3,12 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-// use Cartalyst\Tags\TaggableTrait;
-// use Cartalyst\Tags\TaggableInterface;
+use Cartalyst\Tags\TaggableTrait;
+use Cartalyst\Tags\TaggableInterface;
 
-class Addon extends Model
+class Addon extends Model implements TaggableInterface
 {
-    //use TaggableTrait;
+    use TaggableTrait;
     protected $table = 'addons';
 
     public function route(){

@@ -13,7 +13,7 @@
                 <input class="input" v-model="NewRoutePrice" type="text" placeholder="Price">
             </div>
         </div>
-        
+        <LocationTag/>
         <div class="field">
             <div class="control">
                 <button class="button" @click="uploadRoute">Submit</button>
@@ -41,9 +41,16 @@ data: function() {
 methods: {
     uploadRoute: function(){
         console.log("upload route entered");
-            axios.post('/trip/uploadTrip', {
-                title: this.NewRouteTitle,
-                price: this.NewRoutePrice
+            let formData = new FormData();
+            formData.append('title', this.NewRouteTitle);
+            formData.append('price', this.NewRoutePrice);
+            formData.append('tags', this.$store.state.locationTags);
+
+            axios.post('/trip/uploadTrip', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
                 })
                 .then(response => {
                     console.log(response.data);

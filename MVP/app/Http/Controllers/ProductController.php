@@ -17,6 +17,7 @@ class ProductController extends Controller
     }
     function getRoutes(){
         $routes = \App\Route::all();
+        error_log($routes);
         return response()->json(['routes' => $routes]);
     }
     function getLocationTags(){
@@ -40,7 +41,6 @@ class ProductController extends Controller
 
         $newTrip->save();
         return response()->json(['success' => 'newroute']);
-    }
     }
     function newAddon(Request $request){
         //error_log($request->title);
