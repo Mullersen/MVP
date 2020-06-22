@@ -57,31 +57,22 @@
             <div class="columns">
                 <div class="column is-8 is-offset-2">
                     <div class="columns">
-                        <div class="column" >
+                        <div class="column steps" >
                             <p class="title is-2 has-text-grey">01</p>
                             <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Get Inspired</p>
                             <p class="content">Scroll down and imagine a trip to Canada with us. We have carefully chosen a the best route based on our own experiences, but you are free to follow it, or do your own thing</p>
                         </div>
-                        <div class="column" id="process2">
+                        <div class="column steps" id="process2">
                             <p class="title is-2 has-text-grey">02</p>
-                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Customize the trip</p>
+                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Customize</p>
                             <p class="content">Always dreamt of trying outdoors rock-climbing? You can add it as an activity to your trip right here on the site and we will take care of the details for you.</p>
                         </div>
-                        <div class="column" id="process3">
+                        <div class="column steps" id="process3">
                             <p class="title is-2 has-text-grey">03</p>
-                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Live your dream</p>
+                            <p class="subtitle is-2 underlined" style=" margin-bottom: 0.5rem;">Live it!</p>
                             <p class="content">Book the trip of your dreams right here, or if you have any questions or want to add your own destination you can contact us. We promise you will not regret it!</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section is-small has-background-primary">
-        <div class="container">
-            <div class="columns">
-                <div class="column has-text-centered">
-                    <p class="title is-2 underlined" style=" margin: 7rem 0 2rem 0; padding: 0.75rem;">Dream away with us</p>
                 </div>
             </div>
         </div>
@@ -94,7 +85,7 @@
                 <span class="delete" data-dismiss="quickview"></span>
             </header>
             <div class="quickview-body">
-                <div class="quickview-block">
+                <div class="quickview-block" id="quickviewContent">
                     <Cart />
                 </div>
             </div>

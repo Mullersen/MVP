@@ -3,7 +3,6 @@
     <h1 class="title is-3" style="margin-top: 2rem; display:inline-block;">
       <a class="has-text-primary" href="/cart">Cart</a>
     </h1>
-    <button style="float:right; margin-top: 2rem;display:inline-block;" class="button is-radiusless" @click="clearCookies">Clear Cart</button>
     <p
       class="content has-text-primary"
     >These are the Choices you have made up until now. Press continue to go to payment</p>
@@ -36,7 +35,20 @@
         </p>
       </div>
     </div>
-    <button class="button is-radiusless" style="margin-bottom:2rem;" @click="togglePrice = true">Continue</button>
+    <div class="level">
+      <div class="level-left">
+        <button
+          class="button is-radiusless"
+          @click="togglePrice = true"
+        >Continue</button>
+      </div>
+      <div class="level-right">
+        <button
+          class="button is-radiusless"
+          @click="clearCookies"
+        >Clear Cart</button>
+      </div>
+    </div>
     <div v-if="togglePrice == true">
       <h2 class="subtitle has-text-primary">The final price</h2>
       <h2 class="subtitle has-text-primary">{{this.finalPrice}} CAD</h2>
@@ -63,7 +75,7 @@ export default {
     clearCookies: function() {
       document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       document.cookie = "transport=; expires=Thu 01 Jan 1990 00:00:00 UTC";
-      this.updateCartChoices()
+      this.updateCartChoices();
     },
     sumPrices: function() {
       setTimeout(() => {
@@ -117,5 +129,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.level{
+    margin-bottom: 2rem;
+}
 </style>

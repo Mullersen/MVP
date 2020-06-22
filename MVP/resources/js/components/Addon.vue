@@ -1,35 +1,44 @@
 <template>
-  <div>
-    <hr class="hr" />
-    <h2 class="subtitle has-text-centered">These are some activities we think would be great on your trip.</h2>
-    <p class="content has-text-centered"> You can choose however many you want. Or none, it's up to you!</p>
-    <div class="columns is-multiline ">
-      <div
-        id="cardContainer"
-        class="column is-one-quarter"
-        v-for="(addon, index) in this.$store.state.addonArray"
-        :key="addon.id"
-      >
-        <div @click="updateAddons(index)" class="card equalHeight is-clickable" :id="'addon' + index">
-        <div class="id" style="display:none">{{addon.id}}</div>
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img
-                :src="addon.image"
-                alt="activity for Inside Canada in the Rocky Mountains"
-              />
-            </figure>
-          </div>
-          <div class="card-content">
-            <p class="title is-4 has-text-dark">{{addon.activity}}</p>
-            <p class="subtitle is-6">{{addon.price}} CAD</p>
-            <p class="content">{{addon.description}}</p>
+  <section class="section is-small has-background-primary">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-4">
+          <h1 class="title is-2">The activities</h1>
+          <h2 class="subtitle">These are some activities we think would be great on your trip.</h2>
+          <p class="content">You can choose however many you want. Or none, it's up to you!</p>
+        </div>
+        <div class="column is-8">
+          <div class="columns is-multiline">
+            <div
+              id="cardContainer"
+              class="column is-half"
+              v-for="(addon, index) in this.$store.state.addonArray"
+              :key="addon.id"
+            >
+              <div
+                @click="updateAddons(index)"
+                class="card equalHeight is-clickable"
+                :id="'addon' + index"
+              >
+                <div class="id" style="display:none">{{addon.id}}</div>
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                    <img :src="addon.image" alt="activity for Inside Canada in the Rocky Mountains" />
+                  </figure>
+                </div>
+                <div class="card-content">
+                  <p class="title is-4 has-text-dark">{{addon.activity}}</p>
+                  <p class="subtitle is-6">{{addon.price}} CAD</p>
+                  <p class="content">{{addon.description}}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <h2 class="subtitle has-text-centered">Click on Cart top right corner to see your choices!</h2>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -37,7 +46,7 @@ export default {
   name: "Addon",
   data: function() {
     return {
-      cookieAddonArray: [],
+      cookieAddonArray: []
     };
   },
   methods: {
@@ -52,29 +61,29 @@ export default {
 
       //select all chosen addons and turn into cookie with ids - if no addons, delete cookie
       var allActiveCards = document.querySelectorAll(".activeAddon");
-      if(allActiveCards){
+      if (allActiveCards) {
         var allActiveCardsArr = Array.from(allActiveCards);
         var newArr = allActiveCardsArr.map(i => i.firstChild.innerHTML);
         var json_str = JSON.stringify(newArr);
         document.cookie = "addons=" + json_str;
       } else {
-          document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
+        document.cookie = "addons=; expires=Thu 01 Jan 1990 00:00:00 UTC";
       }
 
       //update cart with chosen transportation
-         this.$store.dispatch("getChosenAddons", newArr);
+      this.$store.dispatch("getChosenAddons", newArr);
     },
-    checkIfActive: function(){
-        //check if the addon has already been chosen by the client
-        this.$store.state.addonArray.forEach(addonToCheck =>{
-            this.cookieAddonArray.forEach(element => {
-                //console.log(element + " " + addonToCheck.id);
-                if(element == addonToCheck.id){
-                    //console.log(element);
-                    this.updateAddons(element);
-                };
-            });
+    checkIfActive: function() {
+      //check if the addon has already been chosen by the client
+      this.$store.state.addonArray.forEach(addonToCheck => {
+        this.cookieAddonArray.forEach(element => {
+          //console.log(element + " " + addonToCheck.id);
+          if (element == addonToCheck.id) {
+            //console.log(element);
+            this.updateAddons(element);
+          }
         });
+      });
     },
     checkCookie: function(param) {
       //console.log("check cookie has been called with " + param);
@@ -87,16 +96,17 @@ export default {
           cookie = cookie.substring(1);
         }
         if (cookie.indexOf(param) == 0) {
-            this.cookieAddonArray = JSON.parse(cookie.substring(param.length + 1, cookie.length));
+          this.cookieAddonArray = JSON.parse(
+            cookie.substring(param.length + 1, cookie.length)
+          );
         }
       }
     }
   },
-  mounted(){
-      this.checkCookie("addons");
-      this.checkIfActive();
+  mounted() {
+    this.checkCookie("addons");
+    this.checkIfActive();
   }
-
 };
 </script>
 
@@ -104,9 +114,9 @@ export default {
 .activeAddon {
   background: grey;
 }
-.equalHeight{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.equalHeight {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 </style>

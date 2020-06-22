@@ -14,7 +14,67 @@
 }
 
 #process3 {
-  padding-top: 160px;
+  padding-top: 150px;
+}
+
+.steps {
+  margin: 0 0.5vw 0 0.5vw;
+}
+
+#welcomeHero {
+  display: none;
+}
+
+#canadaTitle {
+  font-size: 8rem;
+}
+
+.carouselImg {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+}
+
+.navbar-background {
+  background-color: #111a2e !important;
+}
+
+.underlined {
+  text-decoration: underline;
+  -webkit-text-decoration-color: #da6e23;
+          text-decoration-color: #da6e23;
+}
+
+#quickviewContent {
+  padding: 2vh 1vw 2vh 1vw;
+}
+
+@media (max-width: 1025px) {
+  #heroWrapper {
+    background-image: url("/images/Norquay-lookout.JPG");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  #canadaTitle {
+    font-size: 3rem;
+  }
+
+  #welcomeCarousel {
+    display: none;
+  }
+
+  #welcomeHero {
+    display: inline;
+  }
+
+  #heroImg {
+    opacity: 0.3;
+  }
+
+  #firstImage {
+    display: none;
+  }
 }
 
 /*! bulma.io v0.8.2 | MIT License | github.com/jgthms/bulma */
