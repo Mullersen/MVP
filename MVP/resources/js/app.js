@@ -12,11 +12,19 @@ const appStore = new Vuex.Store({
         addonArray: [],
         chosenAddons: [],
         chosenRoute: [],
+        existingLocationTags: [],
         locationTags: [],
+
     },
     mutations: {
         updateRoute: function(state, data) {
-                state.chosenRoute = data;
+            state.chosenRoute = data;
+        },
+        updateExistingLocationTags: function(state, data) {
+            state.existingLocationTags = data;
+        },
+        updateFinalLocationTags: function(state, data) {
+                state.locationTags = state.locationTags.concat(data);
             }
             //     updateChosenTransportation: function(state, data) {
             //         state.chosenTransportation = data;

@@ -33,28 +33,29 @@ class ProductController extends Controller
         return response()->json(['chosenTransportation' => $chosenTransportation]);
     }
     function newTrip(Request $request){
+        error_log($request->tags);
         $newTrip = new \App\Route;
-        $newTrip->routename = "rockies";
-        $newTrip->price = 200;
+        $newTrip->routename = $request->title;
+        $newTrip->price = $request->price;
 
-        //$newRoute->tag($request->tags);
+        $newTrip->tag($request->tags);
 
         $newTrip->save();
         return response()->json(['success' => 'newroute']);
     }
     function newAddon(Request $request){
-        //error_log($request->title);
+        error_log($request->title);
         $newAddon = new \App\Addon;
         $newAddon->image = $request->file('image')->store('uploads');
         $newAddon->activity = $request->title;
         $newAddon->description = $request->description;
         $newAddon->price = $request->price;
 
-        //$newAddon->tag($request->tags);
+        $newAddon->tag($request->tags);
 
         $newAddon->save();
 
-        return response()->json(['success' => 'good']);
+        return response()->json(['success' => 'newaddon']);
     }
     function deleteAddon(Request $request){
         \App\Addon::where('id', '=', $request->id)->delete();

@@ -2036,6 +2036,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LocationTag_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LocationTag.vue */ "./resources/js/components/LocationTag.vue");
 //
 //
 //
@@ -2105,14 +2106,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); //import LocationTag from './LocationTag.vue';
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Adminaddon",
-  // components: {
-  //     LocationTag
-  // },
+  components: {
+    LocationTag: _LocationTag_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       NewAddonTitle: "",
@@ -2134,8 +2135,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); /
       formData.append('image', this.file);
       formData.append('title', this.NewAddonTitle);
       formData.append('description', this.NewAddonDescription);
-      formData.append('price', this.NewAddonPrice); //formData.append('location', this.NewAddonLocations);
-      //formData.append('tags', this.$store.state.locationTags);
+      formData.append('price', this.NewAddonPrice); //formData.append('tags', this.$store.state.locationTags);
 
       axios.post('/addons/uploadAddon', formData, {
         headers: {
@@ -2448,16 +2448,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
   data: function data() {
     return {
       NewRouteTitle: "",
-      NewRoutePrice: ""
+      NewRoutePrice: "",
+      NewRouteTags: []
     };
   },
   methods: {
     uploadRoute: function uploadRoute() {
+      this.NewRouteTags = this.$store.state.locationTags;
       console.log("upload route entered");
       var formData = new FormData();
       formData.append('title', this.NewRouteTitle);
       formData.append('price', this.NewRoutePrice);
-      formData.append('tags', this.$store.state.locationTags);
+      formData.append('tags', this.NewRouteTags);
       axios.post('/trip/uploadTrip', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -2679,9 +2681,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
   data: function data() {
     return {
       newLocationTags: "",
-      selectedLocationTags: [],
-      existingLocationTags: [],
-      locationTags: []
+      selectedLocationTags: [] //locationTags: []
+
     };
   },
   methods: {
@@ -2689,22 +2690,24 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       var _this = this;
 
       axios.get("locations/getLocationTags").then(function (response) {
-        console.log(response.data.tags);
-        _this.existingLocationTags = response.data.tags;
+        console.log(response.data.tags); //upload data to store
+
+        _this.$store.commit('updateExistingLocationTags', response.data.tags);
       })["catch"](function (error) {
         console.log(error.message);
       });
     },
     addExistingLocationTag: function addExistingLocationTag() {
-      this.locationTags.push(this.selectedLocationTags);
-      console.log(this.locationTags);
+      //this.locationTags.push(this.selectedLocationTags);
+      this.$store.commit('updateFinalLocationTags', this.selectedLocationTags);
     },
     addNewLocationTag: function addNewLocationTag() {
       var str = this.newLocationTags.replace(/\s+/g, "");
       var tagsArray = str.split(",");
-      var finalTags = this.locationTags.concat(tagsArray);
-      this.locationTags = finalTags;
-      console.log(this.locationTags);
+      var finalTags = tagsArray.filter(function (word) {
+        return word.length >= 1;
+      });
+      this.$store.commit('updateFinalLocationTags', finalTags); //console.log(this.locationTags);
     }
   },
   mounted: function mounted() {
@@ -4306,120 +4309,127 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "box" }, [
-      _c("p", { staticClass: "subtitle" }, [_vm._v("Create new addon")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Title")]),
+    _c(
+      "div",
+      { staticClass: "box" },
+      [
+        _c("p", { staticClass: "subtitle" }, [_vm._v("Create new addon")]),
         _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.NewAddonTitle,
-                expression: "NewAddonTitle"
-              }
-            ],
-            staticClass: "input",
-            attrs: { type: "text", placeholder: "Title" },
-            domProps: { value: _vm.NewAddonTitle },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Title")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.NewAddonTitle,
+                  expression: "NewAddonTitle"
                 }
-                _vm.NewAddonTitle = $event.target.value
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.NewAddonDescription,
-                expression: "NewAddonDescription"
-              }
-            ],
-            staticClass: "input",
-            attrs: { type: "text", placeholder: "Description" },
-            domProps: { value: _vm.NewAddonDescription },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "input",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.NewAddonTitle },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.NewAddonTitle = $event.target.value
                 }
-                _vm.NewAddonDescription = $event.target.value
               }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Image")]),
+            })
+          ])
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            ref: "file",
-            staticClass: "input",
-            attrs: { id: "file", type: "file" },
-            on: {
-              change: function($event) {
-                return _vm.handleFileUpload()
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Price")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.NewAddonPrice,
-                expression: "NewAddonPrice"
-              }
-            ],
-            staticClass: "input",
-            attrs: { type: "text", placeholder: "Price" },
-            domProps: { value: _vm.NewAddonPrice },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Description")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.NewAddonDescription,
+                  expression: "NewAddonDescription"
                 }
-                _vm.NewAddonPrice = $event.target.value
+              ],
+              staticClass: "input",
+              attrs: { type: "text", placeholder: "Description" },
+              domProps: { value: _vm.NewAddonDescription },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.NewAddonDescription = $event.target.value
+                }
               }
-            }
-          })
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Image")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("input", {
+              ref: "file",
+              staticClass: "input",
+              attrs: { id: "file", type: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.handleFileUpload()
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("label", { staticClass: "label" }, [_vm._v("Price")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "control" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.NewAddonPrice,
+                  expression: "NewAddonPrice"
+                }
+              ],
+              staticClass: "input",
+              attrs: { type: "text", placeholder: "Price" },
+              domProps: { value: _vm.NewAddonPrice },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.NewAddonPrice = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("LocationTag"),
+        _vm._v(" "),
+        _c("div", { staticClass: "field" }, [
+          _c("div", { staticClass: "control" }, [
+            _c(
+              "button",
+              { staticClass: "button", on: { click: _vm.uploadAddon } },
+              [_vm._v("Submit")]
+            )
+          ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("div", { staticClass: "control" }, [
-          _c(
-            "button",
-            { staticClass: "button", on: { click: _vm.uploadAddon } },
-            [_vm._v("Submit")]
-          )
-        ])
-      ])
-    ]),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -5024,44 +5034,48 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "field is-grouped" }, [
       _c("div", { staticClass: "control is-expanded" }, [
-        _c("div", { staticClass: "select" }, [
-          _c(
-            "select",
-            {
-              directives: [
+        this.$store.state.existingLocationTags.length >= 1
+          ? _c("div", { staticClass: "select" }, [
+              _c(
+                "select",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.selectedLocationTags,
-                  expression: "selectedLocationTags"
-                }
-              ],
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.selectedLocationTags = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(_vm.existingLocationTags, function(location) {
-              return _c(
-                "option",
-                { key: location.id, domProps: { value: location.name } },
-                [_vm._v(_vm._s(location.name))]
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedLocationTags,
+                      expression: "selectedLocationTags"
+                    }
+                  ],
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedLocationTags = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                _vm._l(this.$store.state.existingLocationTags, function(
+                  location
+                ) {
+                  return _c(
+                    "option",
+                    { key: location.id, domProps: { value: location.name } },
+                    [_vm._v(_vm._s(location.name))]
+                  )
+                }),
+                0
               )
-            }),
-            0
-          )
-        ])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "control" }, [
@@ -5127,7 +5141,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm.location.length >= 1
+    this.$store.state.locationTags.length >= 1
       ? _c(
           "div",
           { staticClass: "field" },
@@ -5136,7 +5150,10 @@ var render = function() {
               _vm._v("Tilføjede lokationer")
             ]),
             _vm._v(" "),
-            _vm._l(_vm.locationTags, function(locationTag, index) {
+            _vm._l(this.$store.state.locationTags, function(
+              locationTag,
+              index
+            ) {
               return _c("p", { key: index, staticClass: "content" }, [
                 _vm._v(_vm._s(locationTag))
               ])
@@ -18537,11 +18554,18 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     addonArray: [],
     chosenAddons: [],
     chosenRoute: [],
+    existingLocationTags: [],
     locationTags: []
   },
   mutations: {
     updateRoute: function updateRoute(state, data) {
       state.chosenRoute = data;
+    },
+    updateExistingLocationTags: function updateExistingLocationTags(state, data) {
+      state.existingLocationTags = data;
+    },
+    updateFinalLocationTags: function updateFinalLocationTags(state, data) {
+      state.locationTags = state.locationTags.concat(data);
     } //     updateChosenTransportation: function(state, data) {
     //         state.chosenTransportation = data;
     //     },

@@ -4,9 +4,9 @@
       <label class="label">Tilføj eksisterende lokation</label>
       <div class="field is-grouped">
         <div class="control is-expanded">
-          <div class="select">
+          <div v-if="this.$store.state.existingLocationTags.length >= 1" class="select">
             <select v-model="selectedLocationTags">
-              <option v-for="location in existingLocationTags" :key="location.id" :value="location.name">{{location.name}}</option>
+              <option v-for="location in this.$store.state.existingLocationTags" :key="location.id" :value="location.name">{{location.name}}</option>
             </select>
           </div>
         </div>
@@ -28,9 +28,9 @@
           <button class="button" @click="addNewLocationTag()">Tilføj</button>
         </div>
       </div>
-      <div v-if="location.length >= 1" class="field">
+      <div v-if="this.$store.state.locationTags.length >= 1" class="field">
         <h2 class="subtitle">Tilføjede lokationer</h2>
-        <p v-for="(locationTag, index) in locationTags" :key="index" class="content">{{locationTag}}</p>
+        <p v-for="(locationTag, index) in this.$store.state.locationTags" :key="index" class="content">{{locationTag}}</p>
       </div>
     </div>
 </template>
@@ -43,8 +43,7 @@ export default {
     return {
       newLocationTags: "",
       selectedLocationTags: [],
-      existingLocationTags: [],
-      locationTags: []
+       //locationTags: []
     };
   },
   methods: {
@@ -53,22 +52,23 @@ export default {
         .get("locations/getLocationTags")
         .then(response => {
           console.log(response.data.tags);
-          this.existingLocationTags = response.data.tags;
+          //upload data to store
+          this.$store.commit('updateExistingLocationTags', response.data.tags);
         })
         .catch(error => {
           console.log(error.message);
         });
     },
     addExistingLocationTag: function() {
-      this.locationTags.push(this.selectedLocationTags);
-      console.log(this.locationTags);
+      //this.locationTags.push(this.selectedLocationTags);
+      this.$store.commit('updateFinalLocationTags', this.selectedLocationTags);
     },
     addNewLocationTag: function() {
       var str = this.newLocationTags.replace(/\s+/g, "");
       var tagsArray = str.split(",");
-      var finalTags = this.locationTags.concat(tagsArray);
-      this.locationTags = finalTags;
-      console.log(this.locationTags);
+      var finalTags = tagsArray.filter(word => word.length >= 1);
+      this.$store.commit('updateFinalLocationTags', finalTags);
+      //console.log(this.locationTags);
     },
   },
   mounted() {

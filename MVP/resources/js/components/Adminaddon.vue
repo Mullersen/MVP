@@ -26,7 +26,7 @@
                 <input class="input" v-model="NewAddonPrice" type="text" placeholder="Price">
             </div>
         </div>
-        <!-- <LocationTag/> -->
+        <LocationTag/>
         <div class="field">
             <div class="control">
                 <button class="button" @click="uploadAddon">Submit</button>
@@ -69,13 +69,13 @@
 
 <script>
 const axios = require('axios');
-//import LocationTag from './LocationTag.vue';
+import LocationTag from './LocationTag.vue';
 
 export default {
     name: "Adminaddon",
-    // components: {
-    //     LocationTag
-    // },
+    components: {
+        LocationTag
+    },
     data: function(){
         return{
             NewAddonTitle: "",
@@ -96,7 +96,6 @@ export default {
             formData.append('title', this.NewAddonTitle);
             formData.append('description', this.NewAddonDescription);
             formData.append('price', this.NewAddonPrice);
-            //formData.append('location', this.NewAddonLocations);
             //formData.append('tags', this.$store.state.locationTags);
 
             axios.post('/addons/uploadAddon', formData, {

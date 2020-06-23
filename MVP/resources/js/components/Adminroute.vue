@@ -36,15 +36,17 @@ data: function() {
     return{
         NewRouteTitle: "",
         NewRoutePrice: "",
+        NewRouteTags: [],
     }
-}, 
+},
 methods: {
     uploadRoute: function(){
+        this.NewRouteTags = this.$store.state.locationTags;
         console.log("upload route entered");
             let formData = new FormData();
             formData.append('title', this.NewRouteTitle);
             formData.append('price', this.NewRoutePrice);
-            formData.append('tags', this.$store.state.locationTags);
+            formData.append('tags', this.NewRouteTags);
 
             axios.post('/trip/uploadTrip', formData, {
                 headers: {
