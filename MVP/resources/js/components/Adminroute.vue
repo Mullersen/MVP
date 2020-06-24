@@ -56,6 +56,10 @@ methods: {
                 })
                 .then(response => {
                     console.log(response.data);
+                    this.NewRouteTitle = "";
+                    this.NewRoutePrice = "";
+                    this.NewRouteTags = [];
+                    this.$store.commit('clearLocationTags');
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen

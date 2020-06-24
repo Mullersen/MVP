@@ -17,8 +17,9 @@ class ProductController extends Controller
     }
     function getRoutes(){
         $routes = \App\Route::all();
-        error_log($routes);
-        return response()->json(['routes' => $routes]);
+        $tags = \App\Route::find(1)->tags;
+        //error_log($routes);
+        return response()->json(['routes' => $routes, 'tags' => $tags]);
     }
     function getLocationTags(){
         $tags = \App\Route::allTags()->get();
@@ -33,31 +34,29 @@ class ProductController extends Controller
         return response()->json(['chosenTransportation' => $chosenTransportation]);
     }
     function newTrip(Request $request){
-        error_log($request->tags);
         $newTrip = new \App\Route;
         $newTrip->routename = $request->title;
         $newTrip->price = $request->price;
-
+        $newTrip->save();
         $newTrip->tag($request->tags);
 
-        $newTrip->save();
         return response()->json(['success' => 'newroute']);
     }
     function newAddon(Request $request){
-        error_log($request->title);
+        //error_log($request->title);
         $newAddon = new \App\Addon;
         $newAddon->image = $request->file('image')->store('uploads');
         $newAddon->activity = $request->title;
         $newAddon->description = $request->description;
         $newAddon->price = $request->price;
 
-        $newAddon->tag($request->tags);
-
         $newAddon->save();
 
+        $newAddon->tag($request->tags);
         return response()->json(['success' => 'newaddon']);
     }
     function deleteAddon(Request $request){
+        \App\Addon::find($request->id)->untag();
         \App\Addon::where('id', '=', $request->id)->delete();
         return response()->json(['addon' => 'deleted']);
         }

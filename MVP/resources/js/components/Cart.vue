@@ -97,13 +97,12 @@ export default {
         var payload = JSON.parse(this.getCookie("addons"));
         this.$store.dispatch("getChosenAddons", payload);
       }
-
       //load the transportation based on the cookie
       if (this.getCookie("transport")) {
         var payload = this.getCookie("transport");
         this.$store.dispatch("getChosenTransportation", payload);
       }
-      //there is only one route, so just request the route from DB
+      //there is only one route for now, so just request the route from DB
       this.$store.dispatch("requestRoutes");
     },
     getCookie: function(param) {

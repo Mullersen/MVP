@@ -2103,9 +2103,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 
@@ -2132,35 +2129,41 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       var _this = this;
 
       var formData = new FormData();
-      formData.append('image', this.file);
-      formData.append('title', this.NewAddonTitle);
-      formData.append('description', this.NewAddonDescription);
-      formData.append('price', this.NewAddonPrice); //formData.append('tags', this.$store.state.locationTags);
-
-      axios.post('/addons/uploadAddon', formData, {
+      formData.append("image", this.file);
+      formData.append("title", this.NewAddonTitle);
+      formData.append("description", this.NewAddonDescription);
+      formData.append("price", this.NewAddonPrice);
+      formData.append("tags", this.$store.state.locationTags);
+      axios.post("/addons/uploadAddon", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          "Content-Type": "multipart/form-data",
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
       }).then(function (response) {
         console.log(response.data);
 
         _this.$store.dispatch("requestAddons");
+
+        _this.$store.commit("clearLocationTags");
+
+        _this.NewAddonTitle = "";
+        _this.NewAddonDescription = "";
+        _this.NewAddonPrice = "";
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
     },
     promptQuestion: function promptQuestion(index) {
       this.id = document.getElementById("addon" + index).firstChild.innerHTML;
-      document.getElementById('hidden').classList.add('visible');
+      document.getElementById("hidden").classList.add("visible");
     },
     goBack: function goBack() {
-      document.getElementById('hidden').classList.remove('visible');
+      document.getElementById("hidden").classList.remove("visible");
     },
     deleteAddon: function deleteAddon() {
       var _this2 = this;
 
-      axios.post('/addons/deleteAddon', {
+      axios.post("/addons/deleteAddon", {
         id: this.id
       }).then(function (response) {
         console.log(response.data);
@@ -2454,6 +2457,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
   },
   methods: {
     uploadRoute: function uploadRoute() {
+      var _this = this;
+
       this.NewRouteTags = this.$store.state.locationTags;
       console.log("upload route entered");
       var formData = new FormData();
@@ -2467,6 +2472,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         }
       }).then(function (response) {
         console.log(response.data);
+        _this.NewRouteTitle = "";
+        _this.NewRoutePrice = "";
+        _this.NewRouteTags = [];
+
+        _this.$store.commit('clearLocationTags');
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });
@@ -2595,7 +2605,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
       if (this.getCookie("transport")) {
         var payload = this.getCookie("transport");
         this.$store.dispatch("getChosenTransportation", payload);
-      } //there is only one route, so just request the route from DB
+      } //there is only one route for now, so just request the route from DB
 
 
       this.$store.dispatch("requestRoutes");
@@ -2890,7 +2900,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#hidden{\n    display:none;\n}\n.visible{\n    display:block !important;\n    position: fixed;\n    width: 50vw;\n    height: 25vh;\n    top: 25vh;\n    left: 25vw;\n    background-color: grey;\n}\n\n", ""]);
+exports.push([module.i, "\n#hidden {\n  display: none;\n}\n.visible {\n  display: block !important;\n  position: fixed;\n  width: 50vw;\n  height: 25vh;\n  top: 25vh;\n  left: 25vw;\n  background-color: grey;\n}\n", ""]);
 
 // exports
 
@@ -5186,46 +5196,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._m(0), _vm._v(" "), _c("Transport")], 1)
+  return _c(
+    "div",
+    [
+      _c(
+        "section",
+        {
+          staticClass: "section is-small has-background-primary",
+          attrs: { id: "virtualTrip" }
+        },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "columns" }, [
+              _c("div", { staticClass: "column is-4" }, [
+                _c("h1", { staticClass: "title is-2" }, [
+                  _vm._v("Dream away with us")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "content" }, [
+                  this.$store.state.chosenRoute.length == 1
+                    ? _c(
+                        "ol",
+                        { attrs: { type: "1" } },
+                        _vm._l(this.$store.state.locationTags, function(
+                          routeDestinations,
+                          index
+                        ) {
+                          return _c("li", { key: index }, [
+                            _vm._v(_vm._s(routeDestinations.name))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "content" }, [
+                  _vm._v(
+                    "This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!"
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("Transport")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "section",
-      {
-        staticClass: "section is-small has-background-primary",
-        attrs: { id: "virtualTrip" }
-      },
-      [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "columns" }, [
-            _c("div", { staticClass: "column is-4" }, [
-              _c("h1", { staticClass: "title is-2" }, [
-                _vm._v("Dream away with us")
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "content" }, [
-                _vm._v(
-                  "This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column is-8" }, [
-              _c("img", {
-                attrs: {
-                  src: "images/routeMap.JPG",
-                  alt: "The shortest of Inside Canadas routes"
-                }
-              })
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "column is-8" }, [
+      _c("img", {
+        attrs: {
+          src: "images/routeMap.JPG",
+          alt: "The shortest of Inside Canadas routes"
+        }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -18566,6 +18602,9 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     },
     updateFinalLocationTags: function updateFinalLocationTags(state, data) {
       state.locationTags = state.locationTags.concat(data);
+    },
+    clearLocationTags: function clearLocationTags(state) {
+      state.locationTags = [];
     } //     updateChosenTransportation: function(state, data) {
     //         state.chosenTransportation = data;
     //     },
@@ -18595,7 +18634,8 @@ var appStore = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     requestRoutes: function requestRoutes(context) {
       axios.get('/getRoutes').then(function (response) {
         //set up for when there will be more routes
-        context.commit('updateRoute', response.data.routes); //context.state.chosenRoute = response.data.routes[0];
+        context.commit('updateRoute', response.data.routes);
+        context.state.locationTags = response.data.tags;
       })["catch"](function (error) {
         console.log(error.message); // change to error message on screen
       });

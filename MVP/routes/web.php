@@ -25,7 +25,7 @@ if (!empty($proxy_schema)) {
 }
 
 Auth::routes();
-Auth::routes(['/register' => false]);
+//Auth::routes(['/register' => false]);
 
 Route::get('/', 'HomeController@getImages');
 Route::get('/getTransportation', 'ProductController@getTransportation');

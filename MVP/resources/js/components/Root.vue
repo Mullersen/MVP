@@ -5,11 +5,11 @@
         <div class="columns">
           <div class="column is-4">
             <h1 class="title is-2">Dream away with us</h1>
-            <!-- <div class="content">
+            <div class="content">
                 <ol type="1" v-if="this.$store.state.chosenRoute.length == 1">
-                    <li v-for="(routeDestinations, index) in this.$store.state.chosenRoute" :key="index" >{{routeDestinations.locations}}</li>
+                    <li v-for="(routeDestinations, index) in this.$store.state.locationTags" :key="index" >{{routeDestinations.name}}</li>
                 </ol>
-            </div> -->
+            </div>
             <p
             class="content"
           >This is our proposed route. Along the way we have a bunch of options and insider tips we will let you in on, to get the best out of your trip!</p>

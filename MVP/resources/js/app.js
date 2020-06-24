@@ -24,7 +24,10 @@ const appStore = new Vuex.Store({
             state.existingLocationTags = data;
         },
         updateFinalLocationTags: function(state, data) {
-                state.locationTags = state.locationTags.concat(data);
+            state.locationTags = state.locationTags.concat(data);
+        },
+        clearLocationTags: function(state) {
+                state.locationTags = [];
             }
             //     updateChosenTransportation: function(state, data) {
             //         state.chosenTransportation = data;
@@ -59,8 +62,8 @@ const appStore = new Vuex.Store({
             axios.get('/getRoutes')
                 .then(response => {
                     //set up for when there will be more routes
-                    context.commit('updateRoute', response.data.routes)
-                        //context.state.chosenRoute = response.data.routes[0];
+                    context.commit('updateRoute', response.data.routes);
+                    context.state.locationTags = response.data.tags;
                 })
                 .catch(error => {
                     console.log(error.message); // change to error message on screen
